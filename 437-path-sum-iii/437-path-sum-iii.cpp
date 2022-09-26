@@ -31,6 +31,7 @@ public:
         helper(root->left,target,cs);
         helper(root->right,target,cs);
         m[cs]--;
+        cs-=root->val;
     }
     
     int pathSum(TreeNode* root, int targetSum) {
