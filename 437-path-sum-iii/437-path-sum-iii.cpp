@@ -12,6 +12,7 @@
 class Solution {
 public:
     int ct=0;
+    unordered_map<long long,int>m;
     
     void helper(TreeNode* root,int target,long long cs)
     {
@@ -22,18 +23,20 @@ public:
         {
             ct++;
         }
+        if(m.find(cs-target)!=m.end())
+        {
+            ct+=m[cs-target];
+        }
+        m[cs]++;
         helper(root->left,target,cs);
         helper(root->right,target,cs);
-        cs-=root->val;
-        
+        m[cs]--;
     }
     
     int pathSum(TreeNode* root, int targetSum) {
         if(root==NULL)
             return 0;
         helper(root,targetSum,0);
-        pathSum(root->left,targetSum);
-        pathSum(root->right,targetSum);
         
         return ct;
     }
