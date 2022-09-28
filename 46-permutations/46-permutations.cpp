@@ -1,28 +1,25 @@
 class Solution {
 public:
     
-    void helper(vector<int>ip,vector<int>op,vector<vector<int>>&ans)
+    void helper(vector<int>ip,int idx,vector<vector<int>>&ans)
     {
-        if(ip.size()==0)
+       if(idx==ip.size())
+       {
+           ans.push_back(ip);
+           return;
+       }
+       
+        for(int i=idx;i<ip.size();i++)
         {
-            ans.push_back(op);
-            return;
+            swap(ip[idx],ip[i]);
+            helper(ip,idx+1,ans);
+            swap(ip[idx],ip[i]);
         }
-        for(int i=0;i<ip.size();i++)
-        {
-            vector<int>ip1=ip;
-            op.push_back(ip[i]);
-            ip1.erase(ip1.begin()+i);
-            helper(ip1,op,ans);
-            op.pop_back();
-        }
-        
     }
     
     vector<vector<int>> permute(vector<int>& nums) {
         vector<vector<int>>ans;
-        vector<int>op;
-        helper(nums,op,ans);
+        helper(nums,0,ans);
         
         return ans;
     }
