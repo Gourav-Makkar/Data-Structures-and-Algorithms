@@ -15,25 +15,21 @@ public:
             return NULL;
         if(head->next==NULL && n==1)
             return NULL;
-        int ct=0;
-        ListNode* curr=head;
-        while(curr!=NULL)
+        ListNode* slow=head,*fast=head;
+        
+        while(n--)
         {
-            curr=curr->next;
-            ct++;
+            fast=fast->next;
         }
-        if(ct==n)
+        if(fast==NULL)
+            return head->next;
+        while(fast->next!=NULL)
         {
-            head=head->next;
-            return head;
+            slow=slow->next;
+            fast=fast->next;
         }
-        int p=ct-n-1;
-        curr=head;
-        while(p-- && curr!=NULL)
-        {
-            curr=curr->next;
-        }
-        curr->next=curr->next->next;
+        slow->next=slow->next->next;
+        
         return head;
     }
 };
