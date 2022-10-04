@@ -54,7 +54,7 @@ public:
                }
         }
         if(tail!=NULL)
-         tail->next=NULL;
+           tail->next=NULL;
         return head1;
     }
 };
