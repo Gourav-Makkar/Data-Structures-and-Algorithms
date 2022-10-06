@@ -24,7 +24,7 @@ public:
         for(int i=0;i<s.length();i++)
         {
             string s1=s.substr(0,i+1);
-            string s2=s.substr(i+1,s.length()-i+1);
+            string s2=s.substr(i+1);
             
             if(isPalindrome(s1))
             {
