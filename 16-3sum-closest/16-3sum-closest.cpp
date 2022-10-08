@@ -12,20 +12,19 @@ public:
             while(l<r)
             {
                 int cs=nums[i]+nums[l]+nums[r];
-                
+                if(cs==target)
+                {
+                    return cs;
+                }
                 if(abs(target-cs)<=closest)
                 {
                     ans=cs;
                     closest=abs(target-cs);
                 }
-                if(cs==target)
-                    {
-                        return cs;
-                    }
-                    else if(cs<target)
-                        l++;
-                    else
-                        r--;
+               if(cs<target)
+                    l++;
+                else
+                    r--;
             }
         }
         return ans;
