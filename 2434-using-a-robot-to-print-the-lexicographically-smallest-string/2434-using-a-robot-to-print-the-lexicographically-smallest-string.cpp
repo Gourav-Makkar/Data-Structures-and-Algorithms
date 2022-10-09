@@ -32,23 +32,18 @@ public:
                          break;
                      }
                     else
-                  {
-                    if(t.length()==0 || t.back()>s[i])
                     {
-                        i--;
-                        break;
-                    }
-                        ans+=t.back();
-                        t.pop_back();
-                    
-                  }
-                    
-                  }
-                
-            }
-               
-                
-            }
+                         if(t.length()==0 || t.back()>s[i])
+                         {
+                             i--;
+                             break;
+                         }
+                         ans+=t.back();
+                         t.pop_back();
+                    }    
+                 }   
+            }       
+         }
         
         for(int i=t.length()-1;i>=0;i--)
         {
