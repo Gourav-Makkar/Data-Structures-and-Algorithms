@@ -25,27 +25,42 @@ public:
 // 	}
 	
 	int findMaxSum(int *arr, int n) {
+	    
+	   int prev=arr[0];
+	   int prev2=0;
+	   for(int i=1;i<n;i++)
+	   {
+	       int pick=arr[i];
+	       if(i>=2)
+	         pick+=prev2;
+	       int nonPick=0+prev;
+	       
+	       int curr=max(pick,nonPick);
+	       prev2=prev;
+	       prev=curr;
+	   }
+	   return prev;
 	    // code here
 	   // vector<int>v(n);
-	    vector<int>dp(n,0);
+	   // vector<int>dp(n,0);
 	   // for(int i=0;i<n;i++)
 	   // {
 	   //     v[i]=arr[i];
 	   // }
 	   
-	   dp[0]=arr[0];
-	   for(int i=1;i<n;i++)
-	   {
+	   //dp[0]=arr[0];
+	   //for(int i=1;i<n;i++)
+	   //{
 	       
-	       int pick=arr[i];
-	       if(i>=2)
-	         pick+=dp[i-2];
-	       int nonPick=0+dp[i-1];
+	   //    int pick=arr[i];
+	   //    if(i>=2)
+	   //      pick+=dp[i-2];
+	   //    int nonPick=0+dp[i-1];
 	       
-	       dp[i]=max(pick,nonPick);
-	   }
+	   //    dp[i]=max(pick,nonPick);
+	   //}
 	   
-	   return dp[n-1];
+	   //return dp[n-1];
 	    
 	    
 	}
