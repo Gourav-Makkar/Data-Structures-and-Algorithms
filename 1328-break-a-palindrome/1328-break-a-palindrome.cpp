@@ -18,23 +18,15 @@ public:
         int n=palindrome.length();
         if(palindrome.length()==1)
             return "";
-        for(int i=0;i<n;i++)
+        for(int i=0;i<n/2;i++)
         {
             if(palindrome[i]!='a')
             {
-                string s=palindrome;
-                s[i]='a';
-                if(!isPalindrome(s))
-                {
-                    palindrome[i]='a';
-                    break;
-                }
-            }
-            if(i==n-1)
-            {
-                palindrome[i]=palindrome[i]+1;
+               palindrome[i]='a';
+               return palindrome;
             }
         }
+        palindrome[n-1]=palindrome[n-1]+1;
         return palindrome;
     }
 };
