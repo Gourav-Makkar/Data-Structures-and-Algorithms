@@ -11,7 +11,7 @@ class Solution{
 public:
       string maxSum(string w,char x[], int b[],int n){
           // code here 
-          map<char, int> ascii;
+    unordered_map<char, int> ascii;
     for (char c = 'a'; c <= 'z'; c++) {
         ascii[c] = (int)c;
     }
