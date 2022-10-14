@@ -18,37 +18,64 @@ public:
 //         int left= grid[i][j]+helper(grid,i,j-1,dp);
         
 //         return dp[i][j]=min(up,left);
-//     }
+//     }    
     
 //     TABULATION
     
     int minPathSum(vector<vector<int>>& grid) {
         int m=grid.size();
         int n=grid[0].size();
-        vector<vector<int>>dp(m,vector<int>(n,-1));
+        // vector<vector<int>>dp(m,vector<int>(n,-1));
         
         // return helper(grid,m-1,n-1,dp);
         
-        dp[0][0]=grid[0][0];
+//         dp[0][0]=grid[0][0];
+//         for(int i=0;i<m;i++)
+//         {
+//             for(int j=0;j<n;j++)
+//             {
+//                 if(i==0 && j==0)
+//                     continue;
+//                 int up=grid[i][j],left=grid[i][j];
+//                 if(i==0)
+//                     up+=1000;
+//                 else 
+//                     up+=dp[i-1][j];
+//                 if(j==0)
+//                     left+=1000;
+//                 else
+//                     left+=dp[i][j-1];
+                
+//                 dp[i][j]=min(up,left);
+//             }
+//         }
+//         return dp[m-1][n-1];
+        
+        vector<int>prev(n,1000);
         for(int i=0;i<m;i++)
         {
+            vector<int>curr(n);
             for(int j=0;j<n;j++)
             {
                 if(i==0 && j==0)
+                {
+                    curr[j]=grid[i][j];
                     continue;
+                }
                 int up=grid[i][j],left=grid[i][j];
-                if(i==0)
-                    up+=1000;
-                else 
-                    up+=dp[i-1][j];
-                if(j==0)
-                    left+=1000;
+                if(i>0)
+                    up+=prev[j];
                 else
-                    left+=dp[i][j-1];
+                    up+=1000;
+                if(j>0)
+                    left+=curr[j-1];
+                else
+                    left+=1000;
                 
-                dp[i][j]=min(up,left);
+                curr[j]=min(up,left);
             }
+            prev=curr;
         }
-        return dp[m-1][n-1];
+        return prev[n-1];
     }
 };
