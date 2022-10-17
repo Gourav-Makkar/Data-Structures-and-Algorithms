@@ -24,7 +24,7 @@ public:
     int minFallingPathSum(vector<vector<int>>& grid) {
         int r=grid.size();
         int c=grid[0].size();
-        vector<vector<int>>dp(r,vector<int>(c,-1));
+        // vector<vector<int>>dp(r,vector<int>(c,-1));
         int ans=INT_MAX;
         // for(int i=0;i<c;i++)
         // {
@@ -32,13 +32,41 @@ public:
         // }
         // return ans;
         
+//         for(int i=0;i<c;i++)
+//         {
+//             dp[r-1][i]=grid[r-1][i];
+//         }
+        
+//         for(int i=r-2;i>=0;i--)
+//         {
+//             for(int j=0;j<c;j++)
+//             {
+//                 int val=INT_MAX;
+//                 for(int k=0;k<c;k++)
+//                 {
+//                     if(k==j)
+//                         continue;
+//                     val=min(val,grid[i][j]+dp[i+1][k]);
+//                 }
+//                 dp[i][j]=val;
+//             }
+//         }
+//         for(int i=0;i<c;i++)
+//         {
+//             ans=min(ans,dp[0][i]);
+//         }
+//         return ans;
+        
+//         SPACE OPTIMIZED
+        vector<int>prev(c,0);
         for(int i=0;i<c;i++)
         {
-            dp[r-1][i]=grid[r-1][i];
+            prev[i]=grid[r-1][i];
         }
         
         for(int i=r-2;i>=0;i--)
         {
+            vector<int>curr(c,0);
             for(int j=0;j<c;j++)
             {
                 int val=INT_MAX;
@@ -46,14 +74,15 @@ public:
                 {
                     if(k==j)
                         continue;
-                    val=min(val,grid[i][j]+dp[i+1][k]);
+                    val=min(val,grid[i][j]+prev[k]);
                 }
-                dp[i][j]=val;
+                curr[j]=val;
             }
+            prev=curr;
         }
         for(int i=0;i<c;i++)
         {
-            ans=min(ans,dp[0][i]);
+            ans=min(ans,prev[i]);
         }
         return ans;
     }
