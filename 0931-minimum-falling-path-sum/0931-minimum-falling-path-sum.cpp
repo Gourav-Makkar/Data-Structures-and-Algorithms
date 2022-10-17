@@ -3,26 +3,26 @@ public:
     
     int helper(vector<vector<int>>&matrix,int i,int j,vector<vector<int>>&dp)
     {
-        if(j<0 || j>=matrix.size())
+        if(j<0 || j>=matrix[0].size())
             return 1e9;
         if(i==matrix.size()-1)
-            return matrix[i][j]; 
-        
+            return matrix[i][j];
         if(dp[i][j]!=-1)
             return dp[i][j];
         int down=matrix[i][j]+helper(matrix,i+1,j,dp);
-        int leftDiag=matrix[i][j]+helper(matrix,i+1,j-1,dp);
-        int rightDiag=matrix[i][j]+helper(matrix,i+1,j+1,dp);
+        int diagLeft=matrix[i][j]+helper(matrix,i+1,j-1,dp);
+        int diagRight=matrix[i][j]+helper(matrix,i+1,j+1,dp);
         
-        return dp[i][j]=min(down,min(leftDiag,rightDiag));
+        return dp[i][j]=min(down,min(diagLeft,diagRight));
     }
     
     int minFallingPathSum(vector<vector<int>>& matrix) {
-         
-        int n=matrix.size();
-        vector<vector<int>>dp(n,vector<int>(n,-1));
+        int r=matrix.size();
+        int c=matrix[0].size();
         int ans=INT_MAX;
-        for(int i=0;i<n;i++)
+        
+        vector<vector<int>>dp(r,vector<int>(c,-1));
+        for(int i=0;i<c;i++)
         {
             ans=min(ans,helper(matrix,0,i,dp));
         }
