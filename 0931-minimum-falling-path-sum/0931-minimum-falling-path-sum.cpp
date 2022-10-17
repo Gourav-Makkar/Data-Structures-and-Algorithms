@@ -23,34 +23,62 @@ public:
         int c=matrix[0].size();
         int ans=INT_MAX;
         
-        vector<vector<int>>dp(r,vector<int>(c,-1));
+        // vector<vector<int>>dp(r,vector<int>(c,-1));
         // for(int i=0;i<c;i++)
         // {
         //     ans=min(ans,helper(matrix,0,i,dp));
         // }
         // return ans;
-        for(int j=0;j<c;j++)
+//         for(int j=0;j<c;j++)
+//         {
+//             dp[r-1][j]=matrix[r-1][j];
+//         }
+//        for(int i=r-2;i>=0;i--)
+//         {
+//             for(int j=0;j<c;j++)
+//             {
+//                 int down=0,diagleft=1e9,diagright=1e9;
+//                 down=matrix[i][j]+dp[i+1][j];
+//                 if(j>0)
+//                     diagleft=matrix[i][j]+dp[i+1][j-1];
+//                 if(j<c-1)
+//                     diagright=matrix[i][j]+dp[i+1][j+1];
+                
+//                 dp[i][j]=min(down,min(diagleft,diagright));
+//             }
+//         }
+        
+//         for(int i=0;i<c;i++)
+//         {
+//             ans=min(ans,dp[0][i]);
+//         }
+//         return ans;
+        
+//         SPACE OPTIMISED
+        vector<int>prev(c,-1);
+        for(int i=0;i<c;i++)
         {
-            dp[r-1][j]=matrix[r-1][j];
+            prev[i]=matrix[r-1][i];
         }
-       for(int i=r-2;i>=0;i--)
-        {
+        
+        for(int i=r-2;i>=0;i--){
+            vector<int>curr(c,-1);
             for(int j=0;j<c;j++)
             {
                 int down=0,diagleft=1e9,diagright=1e9;
-                down=matrix[i][j]+dp[i+1][j];
+                down=matrix[i][j]+prev[j];
                 if(j>0)
-                    diagleft=matrix[i][j]+dp[i+1][j-1];
+                    diagleft=matrix[i][j]+prev[j-1];
                 if(j<c-1)
-                    diagright=matrix[i][j]+dp[i+1][j+1];
+                    diagright=matrix[i][j]+prev[j+1];
                 
-                dp[i][j]=min(down,min(diagleft,diagright));
+                curr[j]=min(down,min(diagleft,diagright));
             }
+            prev=curr;
         }
-        
         for(int i=0;i<c;i++)
         {
-            ans=min(ans,dp[0][i]);
+            ans=min(ans,prev[i]);
         }
         return ans;
     }
