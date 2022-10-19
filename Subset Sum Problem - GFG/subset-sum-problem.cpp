@@ -10,28 +10,28 @@ using namespace std;
 class Solution{   
 public:
 
-    bool helper(vector<int>&arr,int idx,int sum,vector<vector<int>>&dp)
+    bool helper(vector<int>arr,int idx,int target,int n,vector<vector<int>>&dp)
     {
-        if(sum<0)
-           return false;
-        if(sum==0)
+        if(target==0)
           return true;
-        if(idx==arr.size())
+          
+        if(idx==n)
           return false;
-         if(dp[idx][sum]!=-1)
-           return dp[idx][sum];
          
-        bool pick= helper(arr,idx+1,sum-arr[idx],dp);
-        bool notPick= helper(arr,idx+1,sum,dp);
-        
-        return dp[idx][sum]=(pick|| notPick);
-        
+        if(dp[idx][target]!=-1)
+          return dp[idx][target];
+          
+        if(helper(arr,idx+1,target-arr[idx],n,dp) || helper(arr,idx+1,target,n,dp))
+          return dp[idx][target]=true;
+        return dp[idx][target]=false;
     }
-     
+
     bool isSubsetSum(vector<int>arr, int sum){
         // code here 
+        int n=arr.size();
         vector<vector<int>>dp(101,vector<int>(100001,-1));
-        return helper(arr,0,sum,dp);
+      
+        return helper(arr,0,sum,n,dp);
     }
 };
 
