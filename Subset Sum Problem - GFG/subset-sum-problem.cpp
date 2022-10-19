@@ -80,8 +80,8 @@ public:
         
         vector<bool>prev(sum+1,false);
         prev[0]=true;
-        // prev[arr[0]]=true;
-        for(int i=0;i<n;i++)
+        prev[arr[0]]=true;
+        for(int i=1;i<n;i++)
         {
             vector<bool>curr(sum+1,false);
             curr[0]=true;
