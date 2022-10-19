@@ -54,27 +54,48 @@ public:
     bool isSubsetSum(vector<int>arr, int sum){
         // code here 
         int n=arr.size();
-        vector<vector<bool>>dp(n,vector<bool>(sum+1,false));
+        // vector<vector<bool>>dp(n,vector<bool>(sum+1,false));
       
-        // return helper(arr,n-1,sum,dp);
+        // // return helper(arr,n-1,sum,dp);
         
-        for(int i=0;i<n;i++)
-          dp[i][0]=true;
+        // for(int i=0;i<n;i++)
+        //   dp[i][0]=true;
           
-        dp[0][arr[0]]=true;
+        // dp[0][arr[0]]=true;
         
-        for(int i=1;i<n;i++)
+        // for(int i=1;i<n;i++)
+        // {
+        //     for(int j=1;j<=sum;j++)
+        //     {
+        //         bool notTake=dp[i-1][j];
+        //         bool take=false;
+        //         if(j>=arr[i])
+        //           take=dp[i-1][j-arr[i]];
+        //         dp[i][j]=take || notTake; 
+        //     }
+        // }
+        // return dp[n-1][sum];
+        
+        // SPACE OPTIMIZED
+        
+        vector<bool>prev(sum+1,false);
+        prev[0]=true;
+        for(int i=0;i<n;i++)
         {
-            for(int j=1;j<=sum;j++)
+            vector<bool>curr(sum+1,false);
+            curr[0]=true;
+            for(int target=1;target<=sum;target++)
             {
-                bool notTake=dp[i-1][j];
+                bool notTake=prev[target];
                 bool take=false;
-                if(j>=arr[i])
-                  take=dp[i-1][j-arr[i]];
-                dp[i][j]=take || notTake;
+                if(target>=arr[i])
+                 take=prev[target-arr[i]];
+                curr[target]=take||notTake;
             }
+            prev=curr;
         }
-        return dp[n-1][sum];
+        return prev[sum];
+        
     }
 };
 
