@@ -34,25 +34,20 @@ public:
     
      bool helper(vector<int>arr,int idx,int target,vector<vector<int>>&dp)
     {
-        if(target<0)
-          return false;
         if(target==0)
           return true;
           
         if(idx==0)
-          {
-            if(arr[idx]==target)
-               return true;
-            else
-              return false;
-          }
+          return arr[idx]==target;
+          
         if(dp[idx][target]!=-1)
           return dp[idx][target];
           
-        if(helper(arr,idx-1,target-arr[idx],dp) || helper(arr,idx-1,target,dp))
-          return dp[idx][target]=true;
-          
-        return dp[idx][target]=false;
+        bool notTake=helper(arr,idx-1,target,dp);
+        bool take=false;
+        if(target>=arr[idx])
+          take=helper(arr,idx-1,target-arr[idx],dp);
+        return dp[idx][target]= notTake || take;
     }
 
     bool isSubsetSum(vector<int>arr, int sum){
