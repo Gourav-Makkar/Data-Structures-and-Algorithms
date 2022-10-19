@@ -10,19 +10,48 @@ using namespace std;
 class Solution{   
 public:
 
-    bool helper(vector<int>arr,int idx,int target,int n,vector<vector<int>>&dp)
+// START FROM 0
+
+    // bool helper(vector<int>arr,int idx,int target,int n,vector<vector<int>>&dp)
+    // {
+    //     if(target==0)
+    //       return true;
+          
+    //     if(idx==n)
+    //       return false;
+         
+    //     if(dp[idx][target]!=-1)
+    //       return dp[idx][target];
+          
+    //     if(helper(arr,idx+1,target-arr[idx],n,dp) || helper(arr,idx+1,target,n,dp))
+    //       return dp[idx][target]=true;
+          
+    //     return dp[idx][target]=false;
+    // }
+    
+    
+    // START FROM BACK
+    
+     bool helper(vector<int>arr,int idx,int target,vector<vector<int>>&dp)
     {
+        if(target<0)
+          return false;
         if(target==0)
           return true;
           
-        if(idx==n)
-          return false;
-         
+        if(idx==0)
+          {
+            if(arr[idx]==target)
+               return true;
+            else
+              return false;
+          }
         if(dp[idx][target]!=-1)
           return dp[idx][target];
           
-        if(helper(arr,idx+1,target-arr[idx],n,dp) || helper(arr,idx+1,target,n,dp))
+        if(helper(arr,idx-1,target-arr[idx],dp) || helper(arr,idx-1,target,dp))
           return dp[idx][target]=true;
+          
         return dp[idx][target]=false;
     }
 
@@ -31,7 +60,7 @@ public:
         int n=arr.size();
         vector<vector<int>>dp(101,vector<int>(100001,-1));
       
-        return helper(arr,0,sum,n,dp);
+        return helper(arr,n-1,sum,dp);
     }
 };
 
