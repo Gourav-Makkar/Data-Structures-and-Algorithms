@@ -32,30 +32,49 @@ public:
     
     // START FROM BACK
     
-     bool helper(vector<int>arr,int idx,int target,vector<vector<int>>&dp)
-    {
-        if(target==0)
-          return true;
+    //  bool helper(vector<int>arr,int idx,int target,vector<vector<int>>&dp)
+    // {
+    //     if(target==0)
+    //       return true;
           
-        if(idx==0)
-          return arr[idx]==target;
+    //     if(idx==0)
+    //       return arr[idx]==target;
           
-        if(dp[idx][target]!=-1)
-          return dp[idx][target];
+    //     if(dp[idx][target]!=-1)
+    //       return dp[idx][target];
           
-        bool notTake=helper(arr,idx-1,target,dp);
-        bool take=false;
-        if(target>=arr[idx])
-          take=helper(arr,idx-1,target-arr[idx],dp);
-        return dp[idx][target]= notTake || take;
-    }
+    //     bool notTake=helper(arr,idx-1,target,dp);
+    //     bool take=false;
+    //     if(target>=arr[idx])
+    //       take=helper(arr,idx-1,target-arr[idx],dp);
+    //     return dp[idx][target]= notTake || take;
+    // }
 
+//   TABULATION
     bool isSubsetSum(vector<int>arr, int sum){
         // code here 
         int n=arr.size();
-        vector<vector<int>>dp(101,vector<int>(100001,-1));
+        vector<vector<bool>>dp(n,vector<bool>(sum+1,false));
       
-        return helper(arr,n-1,sum,dp);
+        // return helper(arr,n-1,sum,dp);
+        
+        for(int i=0;i<n;i++)
+          dp[i][0]=true;
+          
+        dp[0][arr[0]]=true;
+        
+        for(int i=1;i<n;i++)
+        {
+            for(int j=1;j<=sum;j++)
+            {
+                bool notTake=dp[i-1][j];
+                bool take=false;
+                if(j>=arr[i])
+                  take=dp[i-1][j-arr[i]];
+                dp[i][j]=take || notTake;
+            }
+        }
+        return dp[n-1][sum];
     }
 };
 
