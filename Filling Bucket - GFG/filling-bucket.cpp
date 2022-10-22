@@ -21,8 +21,18 @@ class Solution {
     
     int fillingBucket(int N) {
         // code here
-        vector<int>dp(N+1,-1);
-        return helper(N,dp);
+        vector<int>dp(N+1,0);
+        // return helper(N,dp);
+        dp[0]=1;
+        for(int i=1;i<=N;i++)
+        {
+          int first=dp[i-1]%100000000;
+          int second=0;
+          if(i>1)
+            second=dp[i-2]%100000000;
+          dp[i]=(first+second)%100000000;
+        }
+        return dp[N];
     }
 };
 
