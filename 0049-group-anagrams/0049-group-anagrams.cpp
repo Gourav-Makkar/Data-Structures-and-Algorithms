@@ -4,22 +4,17 @@ public:
         vector<vector<string>>ans;
         int n=strs.size();
         vector<string>temp=strs;
-        for(int i=0;i<n;i++)
-        {
-            sort(temp[i].begin(),temp[i].end());
-        }
         unordered_map<string,vector<int>>m;
         for(int i=0;i<n;i++)
         {
-            if(m.find(temp[i])==m.end())
-            {
-                m[temp[i]]={i};
-            }
+            sort(temp[i].begin(),temp[i].end());
+            if(m.count(temp[i]))
+             m[temp[i]].push_back(i);
             else
-            {
-                m[temp[i]].push_back(i);
-            }
+                m[temp[i]]={i};
+                
         }
+        
         vector<string>curr;
         for(auto it:m)
         {
