@@ -4,29 +4,19 @@ public:
         vector<vector<string>>ans;
         int n=strs.size();
         vector<string>temp=strs;
-        unordered_map<string,vector<int>>m;
+        unordered_map<string,vector<string>>m;
         for(int i=0;i<n;i++)
         {
             sort(temp[i].begin(),temp[i].end());
             if(m.count(temp[i]))
-             m[temp[i]].push_back(i);
+             m[temp[i]].push_back(strs[i]);
             else
-                m[temp[i]]={i};
+                m[temp[i]]={strs[i]};
                 
         }
-        
-        vector<string>curr;
-        for(auto it:m)
-        {
-            vector<int>pos=it.second;
-            for(int i=0;i<pos.size();i++)
-            {
-                curr.push_back(strs[pos[i]]);
-            }
-            ans.push_back(curr);
-            curr.clear();
-        }
-        
+        for(auto i:m)
+            ans.push_back(i.second);
         return ans;
+       
     }
 };
