@@ -25,7 +25,7 @@ public:
                 ans+=4;
                 m[s]=m[s]-2;
             }
-            else if(s==rev && m[s]>0 && !flag)
+            else if(s==rev && m[s]==1 && !flag)
             {
                 ans+=2;
                 m[s]--;
