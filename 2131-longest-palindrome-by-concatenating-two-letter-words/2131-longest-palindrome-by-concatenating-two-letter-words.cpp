@@ -15,18 +15,13 @@ public:
             {
                 string rev=s;
                 reverse(rev.begin(),rev.end());
-                if(m.find(s)!=m.end() && m.find(rev)!=m.end())
+                if(m[s]>0 && m[rev]>0)
                 {
                     ans+=s;
                     ans+=rev;
                     
                     m[s]--;
                     m[rev]--;
-                    
-                    if(m[s]==0)
-                        m.erase(s);
-                    if(m[rev]==0)
-                        m.erase(rev);
                 }
             }
         }
