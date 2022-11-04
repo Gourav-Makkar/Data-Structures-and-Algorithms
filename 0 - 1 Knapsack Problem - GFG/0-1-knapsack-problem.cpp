@@ -10,8 +10,6 @@ class Solution
     
     int helper(int wt[],int val[],int n,int w,int idx,vector<vector<int>>&dp)
     {
-        if(w==0)
-          return 0;
         if(idx==n-1)
         {
             if(w>=wt[idx])
@@ -37,13 +35,15 @@ class Solution
       return helper(wt,val,n,W,0,dp);
         
     //   for(int i=0;i<n;i++)
-    //      dp[i][0]=0;
-       
+    //       dp[i][0]=0;
+    //   if(W>=wt[n-1])
+    //       dp[n-1][W]=val
+        
     //   for(int idx=n-1;idx>=0;idx--)
     //   {
     //       for(int w=W;w>=1;w--)
     //       {
-               
+                
     //       }
     //   }
     }
