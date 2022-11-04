@@ -10,19 +10,19 @@ public:
         {
             cs+=nums[j];
             
-            if(cs*(j-i+1)<k)
-            {
-                ans+=j-i+1;
-            }
-            else
-            {
+//             if(cs*(j-i+1)<k)
+//             {
+//                 ans+=j-i+1;
+//             }
+//             else
+//             {
                 while(cs*(j-i+1)>=k)
                 {
                     cs=cs-nums[i];
                     i++;
                 }
                 ans+=j-i+1;
-            }
+            
             j++;
         }
         return ans;
