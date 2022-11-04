@@ -5,21 +5,41 @@ public:
         
         if(n==1)
             return 0;
-        vector<int>temp=nums;
-        sort(temp.begin(),temp.end());
+        stack<int>mx;
+        stack<int>mn;
+        
+        for(int i=0;i<n;i++)
+        {
+            if(mx.empty() || nums[i]>=mx.top())
+                mx.push(nums[i]);
+        }
+        for(int i=n-1;i>=0;i--)
+        {
+            if(mn.empty() ||nums[i]<=mn.top())
+                mn.push(nums[i]);
+        }
+        
         int i=0,j=n-1;
         
-        while(i<j)
+        while(i<=j)
         {
-            if(nums[i]==temp[i])
-                i++;
-            if(nums[j]==temp[j])
-                j--;
             if(i==j)
                 return 0;
-            else if(nums[i]!=temp[i] && nums[j]!=temp[j])
+            
+            if(nums[i]!=mn.top() && nums[j]!=mx.top())
                 break;
+            if(nums[i]==mn.top())
+            {
+                i++;
+                mn.pop();
+            }
+            if(nums[j]==mx.top())
+            {
+                j--;
+                mx.pop();
+            } 
         }
+        
         return j-i+1;
     }
 };
