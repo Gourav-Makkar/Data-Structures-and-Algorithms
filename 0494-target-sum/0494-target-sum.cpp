@@ -1,7 +1,7 @@
 class Solution {
 public:
     
-    int helper(vector<int>&nums,int idx,int cs,int target)
+    int helper(vector<int>&nums,int target,int idx,int cs)
     {
         if(idx==nums.size())
         {
@@ -9,14 +9,16 @@ public:
                 return 1;
             return 0;
         }
-        int pos=helper(nums,idx+1,cs+nums[idx],target);
-        int neg=helper(nums,idx+1,cs-nums[idx],target);
         
-        return (pos+neg);
+        int p=helper(nums,target,idx+1,cs+nums[idx]);
+        int m=helper(nums,target,idx+1,cs-nums[idx]);
+        
+        return (p+m);
     }
     
     int findTargetSumWays(vector<int>& nums, int target) {
+        int n=nums.size();
         
-        return helper(nums,0,0,target);
+        return helper(nums,target,0,0);
     }
 };
