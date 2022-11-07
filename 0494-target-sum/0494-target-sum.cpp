@@ -1,7 +1,7 @@
 class Solution {
 public:
     
-    int helper(vector<int>&nums,int target,int idx)
+    int helper(vector<int>&nums,int target,int idx,vector<vector<int>>&dp)
     {
         if(idx==0)
         {
@@ -11,11 +11,13 @@ public:
                 return 1;
             return 0;
         }
-        int nt=helper(nums,target,idx-1);
+        if(dp[idx][target]!=-1)
+            return dp[idx][target];
+        int nt=helper(nums,target,idx-1,dp);
         int t=0;
         if(nums[idx]<=target)
-            t=helper(nums,target-nums[idx],idx-1);
-        return t+nt;
+            t=helper(nums,target-nums[idx],idx-1,dp);
+        return dp[idx][target]=t+nt;
     }
     
     int findTargetSumWays(vector<int>& nums, int target) {
@@ -23,10 +25,11 @@ public:
         int sum=0;
         for(int i=0;i<n;i++)
             sum+=nums[i];
+        
         if(sum<target || (sum-target)%2!=0)
             return 0;
         int tar=(sum-target)/2;
-        
-        return helper(nums,tar,n-1);
+        vector<vector<int>>dp(n,vector<int>(tar+1,-1));
+        return helper(nums,tar,n-1,dp);
     }
 };
