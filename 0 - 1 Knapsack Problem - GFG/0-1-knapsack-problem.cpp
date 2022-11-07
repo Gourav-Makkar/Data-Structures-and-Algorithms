@@ -7,49 +7,33 @@ using namespace std;
 class Solution
 {
     public:
+    //Function to return max value that can be put in knapsack of capacity W.
     
-    int helper(int wt[],int val[],int n,int w,int idx,vector<vector<int>>&dp)
+    
+    int helper(int wt[],int val[],int w,int idx,vector<vector<int>>&dp)
     {
-        if(idx==n-1)
-        {
-            if(w>=wt[idx])
-              return val[idx];
-            return 0;
-        }
+        if(idx==0)
+         {
+              if(wt[0]<=w)
+                return val[0];
+              return 0;
+         }
+          
         if(dp[idx][w]!=-1)
           return dp[idx][w];
+        int nottake=0+helper(wt,val,w,idx-1,dp);
+        int take=0;
+        if(wt[idx]<=w)
+          take=val[idx]+helper(wt,val,w-wt[idx],idx-1,dp);
         
-        int notPick=0+helper(wt,val,n,w,idx+1,dp);
-        int pick=0;
-        if(w>=wt[idx])
-          pick=val[idx]+helper(wt,val,n,w-wt[idx],idx+1,dp);
-           
-        return dp[idx][w]=max(pick,notPick);
+        return dp[idx][w]=max(nottake,take);
     }
     
-    //Function to return max value that can be put in knapsack of capacity W.
     int knapSack(int W, int wt[], int val[], int n) 
     { 
        // Your code here
-       vector<vector<int>>dp(n,vector<int>(W+1,0));
-    //   return helper(wt,val,n,W,0,dp);
-      
-      for(int i=wt[n-1];i<=W;i++)
-        dp[n-1][i]=val[n-1];
-      
-      for(int idx=n-2;idx>=0;idx--)
-      {
-          for(int w=0;w<=W;w++)
-          {
-                int notPick=0+dp[idx+1][w];
-                int pick=0;
-                if(w>=wt[idx])
-                  pick=val[idx]+dp[idx+1][w-wt[idx]];
-                  
-                dp[idx][w]=max(notPick,pick);
-          }
-      }
-      return dp[0][W];
+       vector<vector<int>>dp(n,vector<int>(W+1,-1));
+       return helper(wt,val,W,n-1,dp);
     }
 };
 
