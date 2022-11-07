@@ -1,35 +1,24 @@
 class Solution {
 public:
-    
-    int helper(vector<int>&nums,int target,int idx,vector<vector<int>>&dp)
+     int helper(vector<int>&nums,int idx,int cs,int target,vector<vector<int>>&dp)
     {
-        if(idx==0)
+        if(idx==nums.size())
         {
-            if(target==0 && nums[0]==0)
-                return 2;
-            if(target==0 || nums[0]==target)
+            if(cs==target)
                 return 1;
             return 0;
         }
-        if(dp[idx][target]!=-1)
-            return dp[idx][target];
-        int nt=helper(nums,target,idx-1,dp);
-        int t=0;
-        if(nums[idx]<=target)
-            t=helper(nums,target-nums[idx],idx-1,dp);
-        return dp[idx][target]=t+nt;
+         if(cs>=0 && dp[idx][cs+1000]!=-1)
+             return dp[idx][cs+1000];
+        int pos=helper(nums,idx+1,cs+nums[idx],target,dp);
+        int neg=helper(nums,idx+1,cs-nums[idx],target,dp);
+        
+        return dp[idx][cs+1000]=(pos+neg);
     }
     
     int findTargetSumWays(vector<int>& nums, int target) {
         int n=nums.size();
-        int sum=0;
-        for(int i=0;i<n;i++)
-            sum+=nums[i];
-        
-        if(sum<target || (sum-target)%2!=0)
-            return 0;
-        int tar=(sum-target)/2;
-        vector<vector<int>>dp(n,vector<int>(tar+1,-1));
-        return helper(nums,tar,n-1,dp);
+        vector<vector<int>>dp(20,vector<int>(2000+1,-1));
+        return helper(nums,0,0,target,dp);
     }
 };
