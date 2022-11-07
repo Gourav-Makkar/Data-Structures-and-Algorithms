@@ -10,47 +10,33 @@ using namespace std;
 class Solution{   
 public:
 
-    // bool helper(vector<int>&arr,int idx,int target,vector<vector<int>>&dp)
-    // {
-    //     if(target==0)
-    //       return true;
-    //     if(idx==0)
-    //       return arr[0]==target;
-          
-    //     if(dp[idx][target]!=-1)
-    //       return dp[idx][target];
-    //     bool pick=helper(arr,idx-1,target-arr[idx],dp);
-    //     bool notPick=helper(arr,idx-1,target,dp);
+    bool helper(vector<int>&arr,int sum,int idx,vector<vector<int>>&dp)
+    {
+        if(sum==0)
+          return true;
+        if(idx==0)
+        {
+            if(sum==arr[0])
+              return true;
+            return false;
+        }
+        if(dp[idx][sum]!=-1)
+          return dp[idx][sum];
+       
+        bool notPick=helper(arr,sum,idx-1,dp);
+        bool pick=false;
+        if(arr[idx]<=sum)
+           pick=helper(arr,sum-arr[idx],idx-1,dp);
         
-    //     return dp[idx][target]=pick||notPick;
-    // }
-    
+        
+        return dp[idx][sum]=pick||notPick;
+    }
+
     bool isSubsetSum(vector<int>arr, int sum){
         // code here 
         int n=arr.size();
-        vector<vector<bool>>dp(n,vector<bool>(sum+1,false));
-        // return helper(arr,n-1,sum,dp);
-        
-        for(int i=0;i<n;i++)
-        {
-            dp[i][0]=true;
-        }
-        if(arr[0]<=sum)
-          dp[0][arr[0]]=true;
-        
-        for(int idx=1;idx<n;idx++)
-        {
-            for(int target=1;target<=sum;target++)
-            {
-                bool notPick=dp[idx-1][target];
-                bool pick=false;
-                if(arr[idx]<=target)
-                   pick=dp[idx-1][target-arr[idx]];
-                
-                dp[idx][target]=pick||notPick;
-            }
-        }
-        return dp[n-1][sum];
+        vector<vector<int>>dp(n,vector<int>(sum+1,-1));
+        return helper(arr,sum,n-1,dp);
     }
 };
 
