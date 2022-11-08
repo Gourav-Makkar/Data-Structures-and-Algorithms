@@ -18,12 +18,12 @@ class Solution {
         {
             int temp=q.front();
             q.pop();
-            for(int i=0;i<adj[temp].size();i++)
+            for(auto it: adj[temp])
             {
-                if(vis[adj[temp][i]]==0)
+                if(!vis[it])
                 {
-                    q.push(adj[temp][i]);
-                    vis[adj[temp][i]]=1;
+                    q.push(it);
+                    vis[it]=1;
                 }
             }
             ans.push_back(temp);
