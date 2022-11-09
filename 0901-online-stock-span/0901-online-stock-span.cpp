@@ -9,14 +9,14 @@ public:
     }
     
     int next(int price) {
-        if(flag)
-        {
-            m[price]=i;
-            i++;
-            st.push(price);
-            flag=false;
-            return 1;
-        }
+        // if(flag)
+        // {
+        //     m[price]=i;
+        //     i++;
+        //     st.push(price);
+        //     flag=false;
+        //     return 1;
+        // }
        m[price]=i;
        while(!st.empty() && st.top()<=price)
        {
