@@ -19,10 +19,17 @@ public:
         int n=text1.length();
         int m=text2.length();
         
-        vector<vector<int>>dp(n+1,vector<int>(m+1,0));
+        vector<vector<int>>dp(n+1,vector<int>(m+1,-1));
         // return helper(text1,text2,n-1,m-1,dp);
         
-        
+        for(int i=0;i<=n;i++)
+        {
+           dp[i][0]=0;
+        }
+        for(int i=0;i<=m;i++)
+        {
+            dp[0][i]=0;
+        }
         
         for(int idx1=1;idx1<=n;idx1++)
         {
