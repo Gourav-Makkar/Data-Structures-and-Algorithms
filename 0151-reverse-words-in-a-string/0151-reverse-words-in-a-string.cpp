@@ -23,7 +23,7 @@ public:
             ans+=' ';
             st.pop();
         }
-        ans.erase(ans.end()-1);
+        ans.pop_back();
         return ans;
     }
 };
