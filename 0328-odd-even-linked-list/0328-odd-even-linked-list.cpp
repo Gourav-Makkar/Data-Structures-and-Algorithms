@@ -14,17 +14,26 @@ public:
         
         if(head==NULL || head->next==NULL)
             return head;
-        ListNode* curr1=head,*curr2=head->next,*temp=head->next;
-        while(curr1!=NULL && curr1->next!=NULL && curr2!=NULL && curr2->next!=NULL)
-        {
-            curr1->next=curr1->next->next;
-            curr2->next=curr2->next->next;
+//         ListNode* curr1=head,*curr2=head->next,*temp=head->next;
+//         while(curr1!=NULL && curr1->next!=NULL && curr2!=NULL && curr2->next!=NULL)
+//         {
+//             curr1->next=curr1->next->next;
+//             curr2->next=curr2->next->next;
             
-            curr1=curr1->next;
-            curr2=curr2->next;
+//             curr1=curr1->next;
+//             curr2=curr2->next;
+//         }
+//         curr1->next=temp;
+//         return head;
+        ListNode* curr=head,*nxt=head->next;
+        while(curr->next!=NULL && curr->next->next!=NULL)
+        {
+            ListNode* temp=curr->next;
+            curr->next=curr->next->next;
+            temp->next=curr->next->next;
+            curr=curr->next;
         }
-        curr1->next=temp;
+        curr->next=nxt;
         return head;
-        
     }
 };
