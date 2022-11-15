@@ -14,6 +14,20 @@ public:
     int countNodes(TreeNode* root) {
         if(root==NULL)
             return 0;
-        return 1+countNodes(root->left)+countNodes(root->right);
+        TreeNode* lft=root,*rght=root;
+        int l=0,r=0;
+        while(lft!=NULL)
+        {
+            l++;
+            lft=lft->left;
+        }
+        while(rght!=NULL)
+        {
+            r++;
+            rght=rght->right;
+        }
+        if(l==r)
+            return pow(2,l) - 1;
+        return 1 + countNodes(root->left)+ countNodes(root->right);
     }
 };
