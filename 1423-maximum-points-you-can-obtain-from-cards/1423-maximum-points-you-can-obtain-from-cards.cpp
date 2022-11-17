@@ -2,25 +2,32 @@ class Solution {
 public:
     int maxScore(vector<int>& cardPoints, int k) {
         int n=cardPoints.size();
-        vector<int>st(k+1),en(k+1);
+        int sum=0;
+        int l=n-k;
         
-        st[0]=0;
-        for(int i=1;i<=k;i++)
-        {
-            st[i]=st[i-1]+cardPoints[i-1];
-        }
+        for(int i=0;i<n;i++)
+            sum+=cardPoints[i];
         
-        en[0]=0;
-        for(int i=1;i<=k;i++)
+        int i=0,j=0;
+        int ans=INT_MAX;
+        int cs=0;
+        while(j<n)
         {
-            en[i]=en[i-1]+cardPoints[n-i];
+            cs+=cardPoints[j];
+            if(j-i+1==l)
+                ans=min(ans,cs);
+            else if(j-i+1>l)
+            {
+                while(j-i+1>l)
+                {
+                    cs-=cardPoints[i];
+                    i++;
+                }
+                ans=min(ans,cs);
+            }
+            j++;
         }
-        int ans=INT_MIN;
-        for(int i=0;i<=k;i++)
-        {
-            int cs=st[i]+en[k-i];
-            ans=max(ans,cs);
-        }
-        return ans;
+        return sum-ans;
+            
     }
 };
