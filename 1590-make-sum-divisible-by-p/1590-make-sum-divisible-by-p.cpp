@@ -12,10 +12,10 @@ public:
         {
             cs=(cs+nums[j])%p;
             int t=(cs-rem+p)%p;
-             m[cs]=j;
+             
             if(m.find(t)!=m.end())
                 ans=min(ans,j-m[t]);
-           
+            m[cs]=j;
             j++;
         }
         return ans;
