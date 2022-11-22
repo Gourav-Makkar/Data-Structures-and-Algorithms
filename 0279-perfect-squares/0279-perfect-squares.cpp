@@ -1,15 +1,15 @@
 class Solution {
 public:
     
-    bool check(int n)
-    {
-        for(int i=1;i*i<=n;i++)
-        {
-            if(i*i==n)
-                return true;
-        }
-        return false;
-    }
+    // bool check(int n)
+    // {
+    //     for(int i=1;i*i<=n;i++)
+    //     {
+    //         if(i*i==n)
+    //             return true;
+    //     }
+    //     return false;
+    // }
     
     int helper(vector<int>&sq,int idx,int n,vector<vector<int>>&dp)
     {
@@ -33,10 +33,9 @@ public:
     int numSquares(int n) {
         
         vector<int>squares;
-        for(int i=1;i<=n;i++)
+        for(int i=1;i*i<=n;i++)
         {
-            if(check(i))
-                squares.push_back(i);
+           squares.push_back(i*i);
         }
         int x=squares.size();
         vector<vector<int>>dp(x+1,vector<int>(n+1,-1));
