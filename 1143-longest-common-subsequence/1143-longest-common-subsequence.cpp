@@ -21,7 +21,7 @@ public:
         int n1=text1.length();
         int n2=text2.length();
         
-        vector<vector<int>>dp(n1+1,vector<int>(n2+1,0));
+        vector<vector<int>>dp(n1+1,vector<int>(n2+1,-1));
         // return helper(text1,text2,n1,n2,dp);
         for(int i=0;i<=n1;i++)
         {
