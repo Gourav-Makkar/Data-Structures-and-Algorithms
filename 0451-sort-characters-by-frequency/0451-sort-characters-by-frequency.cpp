@@ -3,32 +3,33 @@ public:
     
     static bool cmp(pair<char,int>&a,pair<char,int>&b)
     {
-        if(a.second!=b.second)
-            return a.second>b.second;
-        else
-            return a.first<b.first;
+        return a.second>b.second;
     }
     
     string frequencySort(string s) {
-        string ans="";
-        map<char,int>m;
-        int n=s.length();
+        unordered_map<char,int>m;
+        int n=s.size();
         for(int i=0;i<n;i++)
-        {
             m[s[i]]++;
-        }
-        vector<pair<char,int>>v;
-        for(auto &it:m)
-            v.push_back(it);
-        sort(v.begin(),v.end(),cmp);
         
-        for(int i=0;i<v.size();i++)
+        vector<pair<char,int>>temp;
+        
+        for(auto it:m)
+            temp.push_back(it);
+        
+        sort(temp.begin(),temp.end(),cmp);
+        
+        string ans="";
+        for(int i=0;i<temp.size();i++)
         {
-            char c=v[i].first;
-            int ct=v[i].second;
-            while(ct--)
-                ans+=c;
+            int size=temp[i].second;
+            while(size>0)
+            {
+                ans+=temp[i].first;
+                size--;
+            }
         }
+        
         return ans;
     }
 };
