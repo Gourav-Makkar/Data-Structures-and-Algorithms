@@ -26,8 +26,7 @@ public:
         if(root==NULL)
             return;
         
-        find(root->left,root->val,ans);
-        find(root->right,root->val,ans);
+        find(root,root->val,ans);
         
         helper(root->left,ans);
         helper(root->right,ans);
