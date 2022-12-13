@@ -30,7 +30,7 @@ public:
     
     int maxPathSum(TreeNode* root) {
         int ans=INT_MIN;
-        int v = helper(root,ans);
+        helper(root,ans);
         
         return ans;
     }
