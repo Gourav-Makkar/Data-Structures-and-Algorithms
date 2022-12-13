@@ -1,89 +1,33 @@
 class Solution {
 public:
     
-//    MEMOIZATION
-    // int helper(vector<vector<int>>&grid,int i,int j,vector<vector<int>>&dp)
-    // {
-    //     if(j<0 || j>=grid[0].size())
-    //         return 1e9;
-    //     if(i==grid.size()-1)
-    //         return grid[i][j];
-    //     int val=INT_MAX;
-    //     if(dp[i][j]!=-1)
-    //         return dp[i][j];
-    //     for(int k=0;k<grid[0].size();k++)
-    //     {
-    //         if(k==j)
-    //             continue;
-    //         val=min(val,grid[i][j]+helper(grid,i+1,k,dp));
-    //     }
-    //     return dp[i][j]=val;
-    // }
+    int helper(vector<vector<int>>&grid,int cr,int cc,int n,vector<vector<int>>&dp)
+    {
+        if(cr==n-1)
+            return grid[cr][cc];
+        
+        if(dp[cr][cc]!=-1)
+            return dp[cr][cc];
+        
+        int temp=INT_MAX;
+        for(int i=0;i<n;i++)
+        {
+            if(i!=cc)
+                temp=min(temp,grid[cr][cc]+helper(grid,cr+1,i,n,dp));
+        }
+        return dp[cr][cc]=temp;
+    }
     
-//     TABULATION
     int minFallingPathSum(vector<vector<int>>& grid) {
-        int r=grid.size();
-        int c=grid[0].size();
-        // vector<vector<int>>dp(r,vector<int>(c,-1));
+        int n=grid.size();
+        
         int ans=INT_MAX;
-        // for(int i=0;i<c;i++)
-        // {
-        //     ans=min(ans,helper(grid,0,i,dp));
-        // }
-        // return ans;
-        
-//         for(int i=0;i<c;i++)
-//         {
-//             dp[r-1][i]=grid[r-1][i];
-//         }
-        
-//         for(int i=r-2;i>=0;i--)
-//         {
-//             for(int j=0;j<c;j++)
-//             {
-//                 int val=INT_MAX;
-//                 for(int k=0;k<c;k++)
-//                 {
-//                     if(k==j)
-//                         continue;
-//                     val=min(val,grid[i][j]+dp[i+1][k]);
-//                 }
-//                 dp[i][j]=val;
-//             }
-//         }
-//         for(int i=0;i<c;i++)
-//         {
-//             ans=min(ans,dp[0][i]);
-//         }
-//         return ans;
-        
-//         SPACE OPTIMIZED
-        vector<int>prev(c,0);
-        for(int i=0;i<c;i++)
+        vector<vector<int>>dp(n,vector<int>(n,-1));
+        for(int i=0;i<n;i++)
         {
-            prev[i]=grid[r-1][i];
+            ans=min(ans,helper(grid,0,i,n,dp));
         }
         
-        for(int i=r-2;i>=0;i--)
-        {
-            vector<int>curr(c,0);
-            for(int j=0;j<c;j++)
-            {
-                int val=INT_MAX;
-                for(int k=0;k<c;k++)
-                {
-                    if(k==j)
-                        continue;
-                    val=min(val,grid[i][j]+prev[k]);
-                }
-                curr[j]=val;
-            }
-            prev=curr;
-        }
-        for(int i=0;i<c;i++)
-        {
-            ans=min(ans,prev[i]);
-        }
         return ans;
     }
 };
