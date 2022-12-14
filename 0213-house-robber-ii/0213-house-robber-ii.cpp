@@ -1,21 +1,18 @@
 class Solution {
 public:
     
-    int helper(vector<int>&nums)
+    int helper(vector<int>&nums,int idx,vector<int>&dp)
     {
-        int prev2=0,prev=nums[0];
+       if(idx<0)
+           return 0;
         
-        for(int i=1;i<nums.size();i++)
-        {
-            int take=nums[i];
-            if(i-2>=0)
-                take+=prev2;
-            int notTake=0+prev;
-            
-            prev2=prev;
-            prev=max(take,notTake);
-        }
-        return prev;
+       if(dp[idx]!=-1)
+           return dp[idx];
+        
+       int take=nums[idx]+helper(nums,idx-2,dp);
+       int notTake=0+helper(nums,idx-1,dp);
+        
+       return dp[idx]=max(take,notTake);
     }
     
     int rob(vector<int>& nums) {
@@ -33,8 +30,12 @@ public:
                 temp2.push_back(nums[i]);
         }
         
-        int ans1=helper(temp1);
-        int ans2=helper(temp2);
+        vector<int>dp1(n-1,-1);
+        int ans1=helper(temp1,temp1.size()-1,dp1);
+        
+        vector<int>dp2(n-1,-1);
+        
+        int ans2=helper(temp2,temp2.size()-1,dp2);
         
         return max(ans1,ans2);
     }
