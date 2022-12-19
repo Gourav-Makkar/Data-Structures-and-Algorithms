@@ -1,39 +1,76 @@
 class Solution {
 public:
-    void DFS(vector<vector<char>>& grid, int i, int j) {
-        // boundary checking
-        if(i < 0 || i >= grid.size() || j < 0 || j >= grid[0].size())
-            return;
-        // return if current position is of water or is already visited
-        if(grid[i][j] == '2' || grid[i][j] == '0')
+    
+    void dfs(vector<vector<char>>&grid,int cr,int cc,int r,int c,vector<vector<int>>&vis)
+    {
+        if(cr<0 || cr==r || cc<0 || cc==c || grid[cr][cc]=='0' || vis[cr][cc]==1)
             return;
         
-        // mark the current as visited
-        grid[i][j] = '2';
+        vis[cr][cc]=1;
         
-        // do DFS in all 4 directions
-        DFS(grid, i+1, j);
-        DFS(grid, i, j-1);
-        DFS(grid, i-1, j);
-        DFS(grid, i, j+1);
+        dfs(grid,cr-1,cc,r,c,vis);
+        dfs(grid,cr,cc+1,r,c,vis);
+        dfs(grid,cr+1,cc,r,c,vis);
+        dfs(grid,cr,cc-1,r,c,vis);
     }
     
-    int numIslands(vector<vector<char>>& grid) {
-        // We can treat the matrix grid as a grid. Each Island is a
-        // connected component. The task is to find no. of disconnectedd components
-        // in the graph.
+//     void bfs(vector<vector<char>>grid,int cr,int cc,int r,int c,vector<vector<int>>&vis)
+//     {
+//         queue<pair<int,int>>q;
+//         q.push({cr,cc});
+//         vis[cr][cc]=1;
         
-        int islands = 0;
-        // We make each 1 as 2 in when it is visited
-        for(int i = 0; i < grid.size(); i++) {
-            for(int j = 0; j < grid[0].size(); j++) {
-                // do DFS in case has not been visited and there is land
-                if(grid[i][j] == '1') {
-                    DFS(grid, i, j);
-                    ++islands;
-                } 
+//         while(!q.empty())
+//         {
+//             pair<int,int>p=q.front();
+//             q.pop();
+//             cr=p.first;
+//             cc=p.second;
+            
+//             if(cr>0 && vis[cr-1][cc]!=1 && grid[cr-1][cc]=='1')
+//             {
+//                 vis[cr-1][cc]=1;
+//                 q.push({cr-1,cc});
+//             }
+            
+//             if(cc<c-1 && vis[cr][cc+1]!=1 && grid[cr][cc+1]=='1')   
+//             {
+//                 vis[cr][cc+1]=1;
+//                 q.push({cr,cc+1});
+//             }
+            
+//             if(cr<r-1 && vis[cr+1][cc]!=1 && grid[cr+1][cc]=='1')
+//             {
+//                 vis[cr+1][cc]=1;
+//                 q.push({cr+1,cc});
+//             }
+            
+//             if(cc>0 && vis[cr][cc-1]!=1 && grid[cr][cc-1]=='1')
+//             {
+//                 vis[cr][cc-1]=1;
+//                 q.push({cr,cc-1});  
+//             }
+//         }
+//     }
+    
+    int numIslands(vector<vector<char>>& grid) {
+        int n=grid.size();
+        int m=grid[0].size();
+        int ans=0;
+        
+        vector<vector<int>>vis(n,vector<int>(m,0));
+        
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                if(grid[i][j]=='1' && vis[i][j]==0)
+                {
+                    ans++;
+                    dfs(grid,i,j,n,m,vis);
+                }
             }
         }
-        return islands;
+        return ans;
     }
 };
