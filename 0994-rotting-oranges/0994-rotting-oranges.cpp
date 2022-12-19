@@ -18,7 +18,7 @@ public:
         while(!q.empty())
         {
             int n=q.size();
-            bool flag=false;
+            // bool flag=false;
             for(int i=0;i<n;i++)
             {
                 int cr=q.front().first;
@@ -27,36 +27,35 @@ public:
                 
                 if(cr>0 && grid[cr-1][cc]==1)
               {
-                flag=true;
+                // flag=true;
                 grid[cr-1][cc]=2;
                 q.push({cr-1,cc});
               }
             
               if(cc<c-1 && grid[cr][cc+1]==1)
               {
-                flag=true;
+                // flag=true;
                 grid[cr][cc+1]=2;
                 q.push({cr,cc+1});
               }
             
               if(cr<r-1 && grid[cr+1][cc]==1)
               {
-                flag=true;
+                // flag=true;
                 grid[cr+1][cc]=2;
                 q.push({cr+1,cc});
               }
             
               if(cc>0 && grid[cr][cc-1]==1)
               {
-                flag=true;
+                // flag=true;
                 grid[cr][cc-1]=2;
                 q.push({cr,cc-1});
               }
                 
             }
-            
-            if(flag)
-                mins++;
+        
+            mins++;
         }
         
         for(int i=0;i<r;i++)
@@ -67,6 +66,8 @@ public:
                     return -1;
             }
         }
-        return mins;
+        if(mins==0)
+            return mins;
+        return mins-1;
     }
 };
