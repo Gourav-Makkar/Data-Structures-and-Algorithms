@@ -16,9 +16,10 @@ public:
         if(dp[idx][len][target]==false)
             return false;
         
-        if(helper(nums,target-nums[idx],idx-1,len-1,dp)) return dp[idx][len][target] = true;
-        if(helper(nums,target,idx-1,len,dp)) return dp[idx][len][target] = true;
-        return dp[idx][len][target] = false;
+        bool take=helper(nums,target-nums[idx],idx-1,len-1,dp);
+        bool notTake=helper(nums,target,idx-1,len,dp);
+        
+        return dp[idx][len][target] = take||notTake;
     }
     
     bool splitArraySameAverage(vector<int>& nums) {
@@ -28,7 +29,7 @@ public:
         for(int i=0;i<n;i++)
             sum+=nums[i];
         
-        vector<vector<vector<bool>>>dp(n,vector<vector<bool>>(n,vector<bool>(sum+1,-1)));
+        vector<vector<vector<bool>>>dp(n,vector<vector<bool>>(n,vector<bool>(sum+1,true)));
         
         for(int i=1;i<=n/2;i++)
         {
