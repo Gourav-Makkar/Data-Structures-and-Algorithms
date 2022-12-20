@@ -30,7 +30,7 @@ public:
         
         vector<vector<vector<bool>>>dp(n,vector<vector<bool>>(n,vector<bool>(sum+1,-1)));
         
-        for(int i=1;i<n;i++)
+        for(int i=1;i<=n/2;i++)
         {
             if((sum*i)%n==0)
             {
