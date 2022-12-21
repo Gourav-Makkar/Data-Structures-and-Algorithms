@@ -39,6 +39,19 @@ public:
         }
     }
     
+    void dfs(vector<vector<char>>&board,int i,int j,int r,int c,vector<vector<int>>&vis)
+    {
+        if(i<0 || i==r || j<0 || j==c || vis[i][j]==1 || board[i][j]!='O')
+            return;
+        
+        vis[i][j]=1;
+        
+        dfs(board,i-1,j,r,c,vis);
+        dfs(board,i,j+1,r,c,vis);
+        dfs(board,i+1,j,r,c,vis);
+        dfs(board,i,j-1,r,c,vis);
+    }
+    
     void solve(vector<vector<char>>& board) {
         int r=board.size();
         int c=board[0].size();
@@ -48,25 +61,25 @@ public:
         for(int i=0;i<c;i++)
         {
             if(board[0][i]=='O')
-                bfs(board,0,i,r,c,vis);
+                dfs(board,0,i,r,c,vis);
         }
         
         for(int i=0;i<r;i++)
         {
             if(board[i][c-1]=='O')
-                bfs(board,i,c-1,r,c,vis);
+                dfs(board,i,c-1,r,c,vis);
         }
         
         for(int i=0;i<c;i++)
         {
             if(board[r-1][i]=='O')
-                bfs(board,r-1,i,r,c,vis);
+                dfs(board,r-1,i,r,c,vis);
         }
         
         for(int i=0;i<r;i++)
         {
             if(board[i][0]=='O')
-                bfs(board,i,0,r,c,vis);
+                dfs(board,i,0,r,c,vis);
         }
         
         for(int i=0;i<r;i++)
