@@ -18,8 +18,7 @@ public:
         }
         else
         {
-            if(buy<=prices[idx])
-                take= prices[idx] + helper(prices,idx+2,false,dp);
+            take= prices[idx] + helper(prices,idx+2,false,dp);
             notTake=helper(prices,idx+1,buy,dp);
         }
         
