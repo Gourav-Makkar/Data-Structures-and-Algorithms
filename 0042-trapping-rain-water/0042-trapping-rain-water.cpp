@@ -6,7 +6,7 @@ public:
         int l=0,r=n-1;
         int lmax=0,rmax=0,ans=0;
         
-        for(int i=0;i<n;i++)
+        while(l<r)
         {
             if(height[l]<=height[r])
             {
