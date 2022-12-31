@@ -6,11 +6,10 @@ public:
         
         vector<int>ans;
         
-        int ct=r*c;
         int curr=0;
         bool flag=false;
         
-        while(ct!=0)
+        while(curr<=(r-1+c-1))
         {
             if(flag)
             {
@@ -19,10 +18,7 @@ public:
                     for(int j=0;j<c;j++)
                     {
                         if(i+j==curr)
-                        {
-                            ans.push_back(mat[i][j]);
-                            ct--;
-                        }
+                           ans.push_back(mat[i][j]); 
                     }
                 }
             }
@@ -33,14 +29,10 @@ public:
                     for(int j=0;j<c;j++)
                     {
                         if(i+j==curr)
-                        {
-                            ans.push_back(mat[i][j]);
-                            ct--;
-                        }
+                          ans.push_back(mat[i][j]);      
                     }
                 }
             }
-            
             curr++;
             flag=!flag;
         }
