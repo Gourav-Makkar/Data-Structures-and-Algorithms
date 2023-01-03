@@ -13,21 +13,24 @@ class Solution
         vector<int>dis(V,1e9);
         dis[S]=0;
         
-        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
-        pq.push({0,S});
+        set<pair<int,int>>s;
+        s.insert({0,S});
         
-        while(!pq.empty())
+        while(s.size()!=0)
         {
-            int d=pq.top().first;
-            int node=pq.top().second;
-            pq.pop();
+            auto it=*(s.begin());
+            int d=it.first;
+            int node=it.second;
+            s.erase(s.begin());
             
             for(auto it:adj[node])
             {
                 if(d+it[1]<dis[it[0]])
                 {
+                    if(dis[it[0]]!=1e9)
+                      s.erase({dis[it[0]],it[0]});
                     dis[it[0]]=d+it[1];
-                    pq.push({dis[it[0]],it[0]});
+                    s.insert({dis[it[0]],it[0]});
                 }
             }
         }
