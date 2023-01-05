@@ -7,17 +7,17 @@ public:
         vector<vector<int>>adj[n];
         for(auto it:flights)
             adj[it[0]].push_back({it[1],it[2]});
-        queue<pair<int,pair<int,int>>>pq;
-        pq.push({0,{src,0}});
+        priority_queue<vector<int>,vector<vector<int>>,greater<vector<int>>>pq;
+        pq.push({0,src,0});
         
         while(!pq.empty())
         {
-            pair<int,pair<int,int>>p=pq.front();
+            vector<int>p=pq.top();
             pq.pop();
             
-            int cc=p.first;
-            int node=p.second.first;
-            int stops=p.second.second;
+            int stops=p[0];
+            int node=p[1];
+            int cc=p[2];
             
             if(stops>k)
                 continue;
@@ -27,7 +27,7 @@ public:
                 if(cc+it[1]<cost[it[0]])
                 {
                     cost[it[0]]=cc+it[1];
-                    pq.push({cost[it[0]],{it[0],stops+1}});
+                    pq.push({stops+1,it[0],cost[it[0]]});
                 }
             }
         }
