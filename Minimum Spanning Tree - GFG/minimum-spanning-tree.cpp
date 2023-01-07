@@ -3,40 +3,97 @@
 using namespace std;
 
 // } Driver Code Ends
+
+class DisjointSet{
+    vector<int>parent,rank,size;
+public:
+    DisjointSet(int n)
+    {
+        parent.resize(n+1);
+        rank.resize(n+1,0);
+        size.resize(n+1,1);
+
+        for(int i=0;i<=n;i++)
+          parent[i]=i;
+    }
+    int findUPar(int node)
+    {
+        if(parent[node]==node)
+          return node;
+        return parent[node]=findUPar(parent[node]);
+    }
+
+    void UnionByRank(int u,int v)
+    {
+        int pu=findUPar(u);
+        int pv=findUPar(v);
+
+        if(pu==pv)
+          return;
+        
+        if(rank[pu]<rank[pv])
+          parent[pu]=pv;
+        else if(rank[pv]<rank[pu])
+          parent[pv]=pu;
+        else{
+            parent[pv]=pu;
+            rank[pu]++;
+        }
+
+    }
+    void UnionBySize(int u,int v)
+    {
+        int pu=findUPar(u);
+        int pv=findUPar(v);
+
+        if(pu==pv)
+          return;
+        
+        if(size[pu]<size[pv])
+        {
+            parent[pu]=pv;
+            size[pv]+=size[pu];
+        }
+        else{
+            parent[pv]=pu;
+            size[pu]+=size[pv];
+        }
+
+    }
+};
+
 class Solution
 {
 	public:
 	//Function to find sum of weights of edges of the Minimum Spanning Tree.
     int spanningTree(int V, vector<vector<int>> adj[])
     {
-        int sum=0;
-        priority_queue<vector<int>,vector<vector<int>>,greater<vector<int>>>pq;
-      
-        vector<int>vis(V,0);
-        pq.push({0,0,-1});
+        int wt=0;
+        vector<vector<int>>edges;
         
-        while(!pq.empty())
+        for(int i=0;i<V;i++)
         {
-            int wt=pq.top()[0];
-            int node=pq.top()[1];
-            int parent=pq.top()[2];
+            for(auto it:adj[i])
+              edges.push_back({it[1],i,it[0]});
+        }
+         
+        sort(edges.begin(),edges.end());
+        
+        DisjointSet ds(V);
+        
+        for(auto it:edges)
+        {
+            int cw=it[0];
+            int u=it[1];
+            int v=it[2];
             
-            pq.pop();
-            if(vis[node]==1)
-              continue;
-            vis[node]=1;
-            
-            sum+=wt;
-            
-            for(auto it:adj[node])
+            if(ds.findUPar(u)!=ds.findUPar(v))
             {
-                if(vis[it[0]]!=1)
-                {
-                    pq.push({it[1],it[0],node});
-                }
+                wt+=cw;
+                ds.UnionBySize(u,v);
             }
         }
-        return sum;
+        return wt;
     }
 };
 
