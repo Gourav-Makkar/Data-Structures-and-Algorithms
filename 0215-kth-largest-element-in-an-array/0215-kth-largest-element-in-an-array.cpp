@@ -25,11 +25,6 @@ public:
     
     int findKthLargest(vector<int>& nums, int k) {
         int st=INT_MAX,en=INT_MIN;
-//         unordered_set<int>s(nums.begin(),nums.end());
-        
-//         nums.resize(0);
-//         for(auto it:s)
-//             nums.push_back(it);
         
         for(auto it:nums)
         {
@@ -43,10 +38,11 @@ public:
         {
             int mid=st+(en-st)/2;
         
-            if(check(nums,mid)>=k)
+            if(check(nums,mid)>=k )
             {
-                ans=mid;
-                st=mid+1;
+               if(find(nums,mid))
+                  ans=mid;
+               st=mid+1;
             }
             else
                 en=mid-1;
