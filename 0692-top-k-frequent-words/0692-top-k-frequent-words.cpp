@@ -1,32 +1,27 @@
 class Solution {
 public:
     
-    static bool cmp(pair<string,int>&a,pair<string,int>&b)
+    static bool cmp(pair<int,string>&a,pair<int,string>&b)
     {
-        if(a.second!=b.second)
-            return a.second>b.second;
-        else
-            return a.first<b.first;
+        if(a.first==b.first)
+            return a.second<b.second;
+        return a.first>b.first;
     }
     
     vector<string> topKFrequent(vector<string>& words, int k) {
-        map<string,int>m;
-        vector<string>ans;
-        for(int i=0;i<words.size();i++)
-        {
-            m[words[i]]++;
-        }
+        unordered_map<string,int>m;
         
-        vector<pair<string,int>>v;
-        for(auto &it: m)
-            v.push_back(it);
-        
+        for(auto it:words)
+            m[it]++;
+        vector<pair<int,string>>v;
+        for(auto it:m)
+            v.push_back({it.second,it.first});
         sort(v.begin(),v.end(),cmp);
-            
+        
+        vector<string>ans;
         for(int i=0;i<k;i++)
-        {
-            ans.push_back(v[i].first);
-        }
+            ans.push_back(v[i].second);
+    
         return ans;
     }
 };
