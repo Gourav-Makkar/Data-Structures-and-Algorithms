@@ -8,22 +8,19 @@ class Solution{
     public:
     int lenOfLongSubarr(int a[],  int n, int k) 
     { 
-        // Complete the function
-        int i=0;
-        int ans=0;
-        int cs=0;
+        int i=0,cs=0,ans=0;
         unordered_map<int,int>m;
         while(i<n)
         {
             cs+=a[i];
             if(cs==k)
               ans=i+1;
-              
+            
             if(m.find(cs-k)!=m.end())
               ans=max(ans,i-m[cs-k]);
-             
-            if(m.find(cs)==m.end())  
-             m[cs]=i;
+            
+            if(m.find(cs)==m.end())
+              m[cs]=i;
               
             i++;
         }
