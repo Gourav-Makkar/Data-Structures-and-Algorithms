@@ -40,7 +40,7 @@ public:
         long long ans=0;
         for(int i=0;i<n;i++)
         {
-            cout<<nextSm[i]<<" "<<prevSm[i]<<endl;
+            // cout<<nextSm[i]<<" "<<prevSm[i]<<endl;
             
             long long ct=(i-prevSm[i])*(nextSm[i]-i);
             ans+=(ct*arr[i]);
