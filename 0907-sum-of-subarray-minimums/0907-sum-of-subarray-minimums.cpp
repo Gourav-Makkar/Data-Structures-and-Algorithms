@@ -1,46 +1,52 @@
 class Solution {
 public:
-    int MOD=1e9+7;
-   int sumSubarrayMins(vector<int>& arr) {
+    int sumSubarrayMins(vector<int>& arr) {
+        int n=arr.size();
         
-        int n = arr.size();
+        vector<int>nextSm(n);
+        stack<int>st;
+        st.push(n-1);
+        nextSm[n-1]=n;
         
-        vector<int> left(n,-1), right(n,n);
-        // for every i find the Next smaller element to left and right
-        
-        // Left
-        stack<int> st;
-        for(int i=0; i<n; i++)
+        // Next smaller element
+        for(int i=n-2;i>=0;i--)
         {
-            while(st.size() && arr[i] < arr[st.top()]) st.pop();
-            if(st.size()) left[i] = i - st.top();
-            else left[i] = i+1;
+            while(!st.empty() && arr[st.top()]>=arr[i])
+                st.pop();
+            int idx=(st.empty())?n:st.top();
+            nextSm[i]=idx;
+            
             st.push(i);
         }
         
-        while(st.size()) st.pop();
+        while(!st.empty())
+            st.pop();
         
-        // Right
-        for(int i=n-1; i>=0; i--)
+        // Previous Smaller element
+        vector<int>prevSm(n);
+        st.push(0);
+        prevSm[0]=-1;
+        
+        for(int i=1;i<n;i++)
         {
-            while(st.size() && arr[i] <= arr[st.top()]) st.pop();
-            if(st.size()) right[i] = st.top() - i;
-            else right[i] = n - i;
+            while(!st.empty() && arr[st.top()]>arr[i])
+                st.pop();
+            int idx=(st.empty())?-1:st.top();
+            prevSm[i]=idx;
+            
             st.push(i);
         }
         
-        // for(int i=0; i<n; i++) cout << left[i] << " : " << right[i] << endl;
-        
-        // for each i, contribution is (Left * Right) * Element 
-        
-        int res = 0;
-        for(int i=0; i<n; i++)
+        long long ans=0;
+        for(int i=0;i<n;i++)
         {
-            long long prod = (left[i]*right[i])%MOD;
-            prod = (prod*arr[i])%MOD;
-            res = (res + prod)%MOD;
+            cout<<nextSm[i]<<" "<<prevSm[i]<<endl;
+            
+            long long ct=(i-prevSm[i])*(nextSm[i]-i);
+            ans+=(ct*arr[i]);
+            ans=ans%1000000007;
         }
         
-        return res%MOD;
+        return ans;
     }
 };
