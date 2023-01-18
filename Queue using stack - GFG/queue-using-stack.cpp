@@ -14,21 +14,23 @@ public:
     }
 
     int dequeue() {
-        while(!s1.empty())
+        if(!s2.empty())
         {
-            s2.push(s1.top());
-            s1.pop();
-        }
-        
-        int ele=s2.top();
-        s2.pop();
-        
-        while(!s2.empty())
-        {
-            s1.push(s2.top());
+            int ele=s2.top();
             s2.pop();
+            return ele;
         }
-        return ele;
+        if(s2.empty())
+        {
+            while(!s1.empty())
+            {
+                s2.push(s1.top());
+                s1.pop();
+            }
+            int ele=s2.top();
+            s2.pop();
+            return ele;
+        }
     }
 };
 
