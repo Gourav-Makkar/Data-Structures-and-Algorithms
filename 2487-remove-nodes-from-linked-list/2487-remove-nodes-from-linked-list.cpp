@@ -1,50 +1,55 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
 class Solution {
 public:
-    ListNode* removeNodes(ListNode* head) {
-        ListNode* curr=head;
-        ListNode* head1=NULL,*tail=NULL;
-        vector<int>v;
+    
+    ListNode* reverse(ListNode* head)
+    {
+        ListNode* prev=NULL,*curr=head,*nxt=NULL;
         while(curr!=NULL)
         {
-            v.push_back(curr->val);
-            curr=curr->next;
+            nxt=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=nxt;
         }
-        int n=v.size();
-        unordered_map<int,bool>m;
+        return prev;
+    }
+    
+    ListNode* removeNodes(ListNode* head) {
+        ListNode* h=NULL,*t=NULL;
+        head=reverse(head);
         
-        int mx=v[n-1];
-        m[n-1]=true;
-        for(int i=n-2;i>=0;i--)
+        int mx=INT_MIN;
+        ListNode* curr=head;
+        
+        while(curr!=NULL)
         {
-            if(v[i]<mx)
+            if(curr->val>=mx)
             {
-                m[i]=false; 
-            }
-            else
-            {
-                m[i]=true;
-                mx=v[i];
-            }
-        }
-        curr=head;
-        for(int i=0;i<n;i++)
-        {
-            if(m[i]==true)
-            {
-                ListNode* temp=new ListNode(v[i]);
-                if(head1==NULL)
+                mx=curr->val;
+                if(h==NULL)
                 {
-                    head1=temp;
-                    tail=temp;
+                    h=curr;
+                    t=curr;
                 }
                 else
                 {
-                    tail->next=temp;
-                    tail=tail->next;
+                    t->next=curr;
+                    t=t->next;
                 }
-                
             }
+            curr=curr->next;
         }
-        return head1;
+        t->next=NULL;
+        return reverse(h);
     }
 };
