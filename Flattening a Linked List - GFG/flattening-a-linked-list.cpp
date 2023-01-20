@@ -47,68 +47,76 @@ struct Node{
 class Solution {
 public:
 
-    Node* merge(Node* h1,Node* h2)
+    Node* merge(Node* curr1,Node* curr2)
     {
         Node* head=NULL,*tail=NULL;
         
-        while(h1!=NULL && h2!=NULL)
+        while(curr1 && curr2)
         {
-            if(h1->data<=h2->data)
+            if(curr1->data<=curr2->data)
             {
                 if(head==NULL)
                 {
-                    head=h1;
-                    tail=h1;
+                    head=curr1;
+                    tail=curr1;
                 }
                 else
                 {
-                    tail->bottom=h1;
+                    tail->bottom=curr1;
                     tail=tail->bottom;
                 }
-                h1=h1->bottom;
+                curr1=curr1->bottom;
             }
             else
             {
-                if(head==NULL)
+                 if(head==NULL)
                 {
-                    head=h2;
-                    tail=h2;
+                    head=curr2;
+                    tail=curr2;
                 }
                 else
                 {
-                    tail->bottom=h2;
+                    tail->bottom=curr2;
                     tail=tail->bottom;
                 }
-                h2=h2->bottom;
+                curr2=curr2->bottom;
             }
         }
-         if(h1==NULL)
+        if(curr1==NULL)
+          {
+              if(head==NULL)
               {
-                if(head==NULL)
-                   head=h2;
-                else
-                   tail->bottom=h2;
+                  head=curr2;
+                  tail=curr2;
               }
-            else
+              else
               {
-                  if(head==NULL)
-                     head=h1;
-                  else
-                    tail->bottom=h1;
+                  tail->bottom=curr2;
               }
-              
-            return head;
+          }
+        else
+          {
+              if(head==NULL)
+              {
+                  head=curr1;
+                  tail=curr1;
+              }
+              else
+              {
+                  tail->bottom=curr1;
+              }
+          }
+          
+        return head;
     }
-
     Node *flatten(Node *root)
     {
-        // Your code here
-        if(root==NULL)
+        Node* curr=root;
+        if(curr==NULL)
           return NULL;
         
-        Node* temp=flatten(root->next);
-        
-        return merge(root,temp);
+        Node* temp=flatten(curr->next);
+        return merge(temp,curr);
     }
 };
 
