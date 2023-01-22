@@ -1,6 +1,6 @@
 class Solution {
 public:
-    
+
     bool isPalindrome(string s)
     {
         int n=s.size();
@@ -18,31 +18,34 @@ public:
     
     void helper(string s,vector<string>&temp,vector<vector<string>>&ans)
     {
-        if(s.size()==0)
+        int n=s.size();
+        if(n==0)
         {
-            ans.push_back(temp);
-            return;
+           ans.push_back(temp);
+           return;
         }
         
-        for(int i=0;i<s.size();i++)
+        for(int i=0;i<n;i++)
         {
-            string s1=s.substr(0,i+1);
-            string s2=s.substr(i+1,s.size());
+            string curr=s.substr(0,i+1);
+            string rem=s.substr(i+1,n-i+1);
             
-            if(isPalindrome(s1))
+            if(isPalindrome(curr))
             {
-                temp.push_back(s1);
-                helper(s2,temp,ans);
+                temp.push_back(curr);
+                helper(rem,temp,ans);
                 temp.pop_back();
             }
         }
+        
     }
     
     vector<vector<string>> partition(string s) {
         vector<vector<string>>ans;
-        vector<string>temp;
         
+        vector<string>temp;
         helper(s,temp,ans);
+        
         return ans;
     }
 };
