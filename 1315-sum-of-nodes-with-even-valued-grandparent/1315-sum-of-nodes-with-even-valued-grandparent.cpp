@@ -11,36 +11,21 @@
  */
 class Solution {
 public:
-    
-    int helper(TreeNode* root)
+    int ans=0;
+    void helper(TreeNode* root,int parent,int grandparent)
     {
         if(root==NULL)
-            return 0;
-        int ans=0;
-        if((root->val)%2==0)
-        {
-            if(root->left)
-            {
-                if(root->left->left)
-                    ans+=root->left->left->val;
-                if(root->left->right)
-                    ans+=root->left->right->val;
-            }
-            if(root->right)
-            {
-                if(root->right->left)
-                    ans+=root->right->left->val;
-                if(root->right->right)
-                    ans+=root->right->right->val;
-            }
-        }
-        ans+= helper(root->left)+helper(root->right);
-        
-        return ans;
+            return;
+        if(grandparent%2==0)
+            ans+=root->val;
+        helper(root->left,root->val,parent);
+        helper(root->right,root->val,parent);
     }
     
-    
     int sumEvenGrandparent(TreeNode* root) {
-        return helper(root);
+        if(root==NULL)
+            return 0;
+        helper(root,1,1);
+        return ans;
     }
 };
