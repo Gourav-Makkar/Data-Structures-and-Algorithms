@@ -114,36 +114,26 @@ struct Node
 class Solution
 {
     public: 
-    Node* head=NULL,*tail=NULL;
-    void helper(Node* root)
-    {
-        if(root==NULL)
-          return;
-        helper(root->left);
-        
-        Node* temp=new Node(root->data);
-        if(head==NULL)
-        {
-            head=temp;
-            tail=temp;
-        }
-        else
-       {
-        tail->right=temp;
-        temp->left=tail;
-        tail=tail->right;
-       }
-        
-        helper(root->right);
-    }
-    
+    Node* prev=NULL;
     //Function to convert binary tree to doubly linked list and return it.
     Node * bToDLL(Node *root)
     {
         if(root==NULL)
           return NULL;
-          
-        helper(root);
+        Node* head=bToDLL(root->left);
+        if(prev==NULL)
+        {
+            head=root;
+            prev=head;
+        }
+        else
+        {
+            root->left=prev;
+            prev->right=root;
+        }
+        prev=root;
+        bToDLL(root->right);
+        
         return head;
     }
 };
