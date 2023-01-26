@@ -12,7 +12,6 @@
 class Solution {
 public:
     
-    
     int helper(TreeNode* root,int &ans)
     {
         if(root==NULL)
@@ -20,18 +19,14 @@ public:
         int ls=helper(root->left,ans);
         int rs=helper(root->right,ans);
         
-        ans=max(ans,root->val+ls+rs);
-        
-        int v = max(ls,rs)+root->val;
-        if(v<0)
-            return 0;
-        return v;
+        ans=max(ans,max(root->val,max(root->val+ls,max(root->val+rs,root->val+ls+rs))));
+        return max(root->val,max(root->val+ls,root->val+rs));
     }
     
     int maxPathSum(TreeNode* root) {
         int ans=INT_MIN;
-        helper(root,ans);
         
+        helper(root,ans);
         return ans;
     }
 };
