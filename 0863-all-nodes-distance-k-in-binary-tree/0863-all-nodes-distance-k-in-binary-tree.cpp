@@ -10,65 +10,50 @@
 class Solution {
 public:
     
-    void helper(TreeNode* root,vector<int>adj[])
+    void make_graph(TreeNode* root,int parent,map<int,vector<int>>&m)
     {
-        if(root==NULL)
-            return;
-        if(root->left!=NULL)
+        if(parent!=-1)
         {
-            adj[root->left->val].push_back(root->val);
-            adj[root->val].push_back(root->left->val);
+            m[root->val].push_back(parent);
+            m[parent].push_back(root->val);
         }
-        if(root->right!=NULL)
-        {
-            adj[root->right->val].push_back(root->val);
-            adj[root->val].push_back(root->right->val);
-        }
-        
-        helper(root->left,adj);
-        helper(root->right,adj);
+        if(root->left)
+            make_graph(root->left,root->val,m);
+        if(root->right)
+            make_graph(root->right,root->val,m);
     }
     
     vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
+        map<int,vector<int>>m;
+        make_graph(root,-1,m);
         
-        int tar=target->val;
-        
-        vector<int>adj[501];
+        map<int,bool>vis;
         vector<int>ans;
-        vector<int>vis(501,0);
-        
-        if(k==0)
-        {
-            ans.push_back(tar);
-            return ans;
-        }
-        
-        helper(root,adj);
         
         queue<pair<int,int>>q;
-        
-        vis[tar]=1;
-        
-        for(auto it:adj[tar])
-            q.push({it,1});
-        
+        q.push({target->val,0});
+        vis[target->val]=1;
         
         while(!q.empty())
         {
-            pair<int,int>p=q.front();
+            int curr=q.front().first;
+            int dis=q.front().second;
             q.pop();
             
-            vis[p.first]=1;
-            
-            if(p.second==k)
-                ans.push_back(p.first);
-            
-            else if(p.second<k)
+            if(dis>k)
+                break;
+            if(dis==k)
             {
-                for(auto it:adj[p.first])
+                ans.push_back(curr);
+                continue;
+            }
+            
+            for(auto it:m[curr])
+            {
+                if(vis[it]==0)
                 {
-                    if(vis[it]==0)
-                        q.push({it,p.second+1});
+                    vis[it]=1;
+                    q.push({it,dis+1});
                 }
             }
         }
