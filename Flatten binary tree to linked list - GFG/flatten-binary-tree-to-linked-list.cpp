@@ -99,28 +99,29 @@ void inorder(struct Node* root)
 class Solution
 {
     public:
-     void preorder(Node* root,vector<Node*>&v)
+     Node* helper(Node* root)
     {
         if(root==NULL)
-            return;
-        v.push_back(root);
-        preorder(root->left,v);
-        preorder(root->right,v);
+            return NULL;
+        Node* temp=root->right;
+        
+        root->right=helper(root->left);
+        
+        root->left=NULL;
+        Node* node=root;
+        
+        while(node->right!=NULL)
+            node=node->right;
+        
+        node->right=helper(temp);
+        
+        return root;
     }
     
     void flatten(Node* root) {
         if(root==NULL)
             return;
-        vector<Node*>v;
-        preorder(root,v);
-        
-        Node* curr=root;
-        for(int i=1;i<v.size();i++)
-        {
-            curr->left=NULL;
-            curr->right=v[i];
-            curr=curr->right;
-        }
+        helper(root);
     }
 };
 
