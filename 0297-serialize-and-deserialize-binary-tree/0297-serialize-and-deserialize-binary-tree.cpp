@@ -49,9 +49,9 @@ public:
         string temp="";
         create(root,temp);
         
-        for(int i=0;i<temp.size();i++)
-            cout<<temp[i];
-        cout<<endl;
+        // for(int i=0;i<temp.size();i++)
+        //     cout<<temp[i];
+        // cout<<endl;
         return temp;
     }
 
