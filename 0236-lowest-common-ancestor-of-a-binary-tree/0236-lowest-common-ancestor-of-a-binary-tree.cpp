@@ -24,10 +24,8 @@ public:
         else if(l==NULL)
             return r;
         
-        else if(r==NULL)
-            return l;
-        
         else
-            return NULL;
+            return l;
+    
     }
 };
