@@ -15,23 +15,15 @@ public:
             return NULL;
         if(root==p || root==q)
             return root;
-        TreeNode* l=lowestCommonAncestor(root->left,p,q);
-        TreeNode* r=lowestCommonAncestor(root->right,p,q);
         
-       if(l==NULL&&r==NULL)
-        {
-            return NULL;
-        }
-        else if(l==NULL)
-        {
-            return r;
-        }
-        else if(r==NULL)
-        {
-            return l;
-        }
-        else{
-            return root;
-        }
+        int mn=min(p->val,q->val);
+        int mx=max(p->val,q->val);
+        
+        if(root->val<mn)
+            return lowestCommonAncestor(root->right,p,q);
+        else if(root->val>mx)
+            return lowestCommonAncestor(root->left,p,q);
+        
+        return root;
     }
 };
