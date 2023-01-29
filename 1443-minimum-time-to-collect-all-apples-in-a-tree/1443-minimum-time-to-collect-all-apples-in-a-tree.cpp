@@ -1,25 +1,26 @@
 class Solution {
 public:
     
-    int dfs(int node,int parent,vector<int>adj[],vector<bool>&hasApple)
+    int helper(int curr,int parent,vector<int>adj[],vector<bool>&apple)
     {
-        int time=0,ct=0;
-        
-        for(auto it:adj[node])
+        int ans=1;
+        for(auto it:adj[curr])
         {
             if(it!=parent)
             {
-                ct=dfs(it,node,adj,hasApple);
+                int ct=helper(it,curr,adj,apple);
                 
-                if(ct>0 || hasApple[it])
-                    time+= (ct+2);
+                if(ct>0)
+                    ans+=ct;
             }
         }
-        return time;
+        
+        if(!apple[curr] && ans==1)
+            return 0;
+        return ans;
     }
     
     int minTime(int n, vector<vector<int>>& edges, vector<bool>& hasApple) {
-        int ans=0;
         vector<int>adj[n];
         
         for(auto it:edges)
@@ -28,6 +29,9 @@ public:
             adj[it[1]].push_back(it[0]);
         }
         
-        return dfs(0,-1,adj,hasApple);
+       int nodes=helper(0,-1,adj,hasApple);
+       if(nodes==0)
+            return 0;
+       return 2*(nodes-1);
     }
 };
