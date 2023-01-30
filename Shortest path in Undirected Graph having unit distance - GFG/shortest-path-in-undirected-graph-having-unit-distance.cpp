@@ -33,7 +33,7 @@ class Solution {
             
             for(auto it:adj[node])
             {
-                if(vis[it]==0 && d+1<dis[it])
+                if(vis[it]==0)
                 {
                     dis[it]=d+1;
                     q.push({it,dis[it]});
