@@ -9,7 +9,9 @@ using namespace std;
 class Solution {
   public:
     vector<int> shortestPath(vector<vector<int>>& edges, int N,int M, int src){
-        // code here
+        vector<int>dis(N,1e9);
+        vector<int>vis(N,0);
+        
         vector<int>adj[N];
         
         for(int i=0;i<M;i++)
@@ -17,23 +19,25 @@ class Solution {
             adj[edges[i][0]].push_back(edges[i][1]);
             adj[edges[i][1]].push_back(edges[i][0]);
         }
-        vector<int>dis(N,1e9);
-        queue<int>q;
         
+        queue<pair<int,int>>q;
+        q.push({src,0});
         dis[src]=0;
-        q.push(src);
+        vis[src]=1;
         
         while(!q.empty())
         {
-            int node=q.front();
+            int node=q.front().first;
+            int d=q.front().second;
             q.pop();
             
             for(auto it:adj[node])
             {
-                if(dis[node]+1<dis[it])
+                if(vis[it]==0 && d+1<dis[it])
                 {
-                    dis[it]=dis[node]+1;
-                    q.push(it);
+                    dis[it]=d+1;
+                    q.push({it,dis[it]});
+                    vis[it]=1;
                 }
             }
         }
@@ -42,7 +46,6 @@ class Solution {
             if(dis[i]==1e9)
               dis[i]=-1;
         }
-        
         return dis;
     }
 };
