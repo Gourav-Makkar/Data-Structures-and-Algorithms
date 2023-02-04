@@ -8,7 +8,7 @@ public:
         {
             for(int j=1;j<m;j++)
             {
-                int mn=min(matrix[i-1][j],min(matrix[i-1][j-1],matrix[i][j-1]));
+                int mn=min({matrix[i-1][j],matrix[i-1][j-1],matrix[i][j-1]});
                 if(matrix[i][j]==1)
                     matrix[i][j]+=mn;
             }
