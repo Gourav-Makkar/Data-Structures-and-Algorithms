@@ -24,6 +24,27 @@ public:
         
         vector<vector<int>>dp(n,vector<int>(m,-1));
         
-        return helper(0,0,grid,n,m,dp);
+        // return helper(0,0,grid,n,m,dp);
+        int cs=0;
+        
+        for(int i=0;i<n;i++)
+        {
+            cs+=grid[i][0];
+            dp[i][0]=cs;
+        }
+        cs=0;
+        for(int i=0;i<m;i++)
+        {
+            cs+=grid[0][i];
+            dp[0][i]=cs;
+        }
+        for(int i=1;i<n;i++)
+        {
+            for(int j=1;j<m;j++)
+            {
+                dp[i][j]=min(dp[i-1][j],dp[i][j-1]) + grid[i][j];
+            }
+        }
+         return dp[n-1][m-1];   
     }
 };
