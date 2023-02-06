@@ -8,25 +8,17 @@ using namespace std;
 //User function template for C++
 class Solution{
 public:	
-
-    int helper(int idx,int *arr,int n,vector<int>&dp)
-    {
-        if(idx>=n)
-          return 0;
-        
-        if(dp[idx]!=-1)
-          return dp[idx];
-        
-        int t=arr[idx]+helper(idx+2,arr,n,dp);
-        int nt=helper(idx+1,arr,n,dp);
-        
-        return dp[idx]=max(t,nt);
-    }
-
 	// calculate the maximum sum with out adjacent
 	int findMaxSum(int *arr, int n) {
-	   vector<int>dp(n,-1); 
-	   return helper(0,arr,n,dp);
+	   vector<int>dp(n);
+	   dp[0]=arr[0];
+	   dp[1]=max(dp[0],arr[1]);
+	   
+	   for(int i=2;i<n;i++)
+	   {
+	       dp[i]=max(dp[i-1],dp[i-2]+arr[i]);
+	   }
+	   return dp[n-1];
 	}
 };
 
