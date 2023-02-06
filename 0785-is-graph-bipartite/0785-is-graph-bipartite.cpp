@@ -1,59 +1,32 @@
 class Solution {
 public:
     
-    bool bfs(vector<vector<int>>&graph,vector<int>&col,int curr)
+    bool dfs(int curr,int clr,vector<vector<int>>&adj,vector<int>&vis)
     {
-        queue<int>q;
-        q.push(curr);
-        col[curr]=0;
+        vis[curr]=clr;
         
-        while(!q.empty())
+        for(auto it:adj[curr])
         {
-            int node=q.front();
-            q.pop();
-            int c=col[node];
-                
-            for(auto it:graph[node])
-            {
-                if(col[it]==c)
-                    return false;
-                if(col[it]==-1)
-                {
-                    col[it]=(c==0)?1:0;
-                    q.push(it);
-                }
-            }
-        }
-        return true;
-    }
-    
-    
-    bool dfs(vector<vector<int>>&graph,vector<int>&col,int curr,int c)
-    {
-        col[curr]=c;
-        
-        for(auto it:graph[curr])
-        {
-            if(col[it]==c)
+            if(vis[it]==clr)
                 return false;
-            if(col[it]==-1)
+            if(vis[it]==-1)
             {
-                if(dfs(graph,col,it,!c)==false)
+                if(dfs(it,!clr,adj,vis)==false)
                     return false;
             }
         }
         return true;
     }
     
-    bool isBipartite(vector<vector<int>>& graph) {
-        int n=graph.size();
-        vector<int>col(n,-1);
+    bool isBipartite(vector<vector<int>>& adj) {
+        int n=adj.size();
+        vector<int>vis(n,-1);
         
         for(int i=0;i<n;i++)
         {
-            if(col[i]==-1)
+            if(vis[i]==-1)
             {
-                if(dfs(graph,col,i,0)==false)
+                if(dfs(i,0,adj,vis)==false)
                     return false;
             }
         }
