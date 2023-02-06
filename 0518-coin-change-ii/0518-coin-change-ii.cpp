@@ -1,26 +1,42 @@
 class Solution {
 public:
     
-    int helper(vector<int>&coins,int amount,int idx,vector<vector<int>>&dp)
-    {
-        if(idx==0)
-        {
-            if(amount%coins[0]==0)
-                return 1;
-            return 0;
-        }
-        if(dp[idx][amount]!=-1)
-            return dp[idx][amount];
-        int nt=helper(coins,amount,idx-1,dp);
-        int t=0;
-        if(coins[idx]<=amount)
-           t=helper(coins,amount-coins[idx],idx,dp);
-        return dp[idx][amount]=t+nt;
-    }
+//     int helper(int idx,vector<int>&coins,int amount)
+//     {
+//         if(idx==0)
+//             return (amount%coins[0]==0);
+//         int t=0;
+//         if(amount>=coins[idx])
+//            t=helper(idx,coins,amount-coins[idx]);
+//         int nt=helper(idx-1,coins,amount);
+        
+//         return t+nt;
+//     }
     
     int change(int amount, vector<int>& coins) {
         int n=coins.size();
-        vector<vector<int>>dp(n,vector<int>(amount+1,-1));
-        return helper(coins,amount,n-1,dp);
+        // return helper(n-1,coins,amount);
+        vector<vector<int>>dp(n,vector<int>(amount+1,0));
+        
+        for(int i=0;i<n;i++)
+            dp[i][0]=1;
+        
+        for(int i=0;i<=amount;i++)
+        {
+            if(coins[0]<=i && i%coins[0]==0)
+                dp[0][i]=1;
+        }
+        
+        for(int i=1;i<n;i++)
+        {
+            for(int j=1;j<=amount;j++)
+            {
+                if(coins[i]<=j)
+                    dp[i][j]=dp[i][j-coins[i]]+dp[i-1][j];
+                else
+                    dp[i][j]=dp[i-1][j];
+            }
+        }
+        return dp[n-1][amount];
     }
 };
