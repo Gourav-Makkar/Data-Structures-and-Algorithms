@@ -9,48 +9,27 @@ using namespace std;
 
 class Solution{
 public:
+    int knapSack(int n, int W, int val[], int wt[])
+    {
+        vector<vector<int>>dp(n,vector<int>(W+1,0));
 
-    int helper(int val[],int wt[],int w,int idx,vector<vector<int>>&dp)
-    {
-        if(idx==0)
-        {
-            if(wt[0]<=w)
-            {
-                 return ((w/wt[0])*val[0]);
-            }
-            return 0;
-        }
-        if(dp[idx][w]!=-1)
-          return dp[idx][w];
-        int nt=0+helper(val,wt,w,idx-1,dp);
-        int t=0;
-        if(wt[idx]<=w)
-          t=val[idx]+helper(val,wt,w-wt[idx],idx,dp);
-          
-        return dp[idx][w]=max(t,nt);
-    }
-     
-    int knapSack(int N, int W, int val[], int wt[])
-    {
-        // code here
-        vector<vector<int>>dp(N,vector<int>(W+1,0));
-        // return helper(val,wt,W,N-1,dp);
         for(int i=0;i<=W;i++)
         {
-            dp[0][i]=(i/wt[0])*val[0];
+            if(i>=wt[0])
+              dp[0][i]=(i/wt[0])*val[0];
         }
-        for(int idx=1;idx<N;idx++)
+        
+        for(int i=1;i<n;i++)
         {
-            for(int w=1;w<=W;w++)
+            for(int j=1;j<=W;j++)
             {
-                int nt=0+dp[idx-1][w];
-                int t=0;
-                if(wt[idx]<=w)
-                  t=val[idx]+dp[idx][w-wt[idx]];
-                dp[idx][w]=max(t,nt);
+                if(j>=wt[i])
+                  dp[i][j]=max(dp[i][j-wt[i]]+val[i],dp[i-1][j]);
+                else
+                  dp[i][j]=dp[i-1][j];
             }
         }
-        return dp[N-1][W];
+        return dp[n-1][W];
     }
 };
 
