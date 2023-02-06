@@ -43,7 +43,7 @@ public:
                     dp[i][j]=dp[i-1][j];
             }
         }
-        if(dp[n-1][amount]==1e9)
+        if(dp[n-1][amount]>=1e9)
             return -1;
         return dp[n-1][amount];
     }
