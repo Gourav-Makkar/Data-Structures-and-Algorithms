@@ -1,16 +1,19 @@
 class Solution {
 public:
     bool judgeSquareSum(int c) {
-       int n=sqrt(c);  //possible value b can take
+      if(c<=2)
+          return true;
         
-       for(int b=0;b<=n;b++)
-       {
-           int a= c - b*b;
-           
-           int temp=sqrt(a);
-           if(temp*temp==a)
-               return true;
-       }
+      long long mx=sqrt(c);
+        
+      for(int i=1;i<=mx;i++)
+      {
+          long long val=c-i*i;
+          int a=sqrt(val);
+          
+          if(a*a==val)
+              return true;
+      }
         return false;
     }
 };
