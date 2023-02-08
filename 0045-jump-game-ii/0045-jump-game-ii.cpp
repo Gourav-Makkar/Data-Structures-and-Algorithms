@@ -1,26 +1,43 @@
 class Solution {
 public:
     
-    int helper(vector<int>&nums,int idx,int des,vector<int>&dp)
+    long long helper(int idx,vector<int>&nums)
     {
-        if(idx==des)
+        int n=nums.size();
+        if(idx==n-1)
             return 0;
-        if(idx>des)
-            return 1e9;
-        if(dp[idx]!=-1)
-            return dp[idx];
-        int ans=1e9;
+        
+        long long ans=INT_MAX;
         for(int i=1;i<=nums[idx];i++)
         {
-            int curr=1 + helper(nums,idx+i,des,dp);
-            ans=min(ans,curr);
+            if(idx+i<=n-1)
+            {
+                long long ct=1+helper(idx+i,nums);
+                ans=min(ans,ct);
+            }
         }
-        return dp[idx]=ans;
+        return ans;
     }
     
     int jump(vector<int>& nums) {
         int n=nums.size();
-        vector<int>dp(n,-1);
-        return helper(nums,0,n-1,dp);
+        
+        // return helper(0,nums);
+        
+        vector<long long>dp(n,INT_MAX);
+        dp[n-1]=0;
+        
+        for(int idx=n-2;idx>=0;idx--)
+        {
+            for(int i=1;i<=nums[idx];i++)
+            {
+                if(idx+i<=n-1)
+                {
+                    long long ct=1+dp[idx+i];
+                    dp[idx]=min(dp[idx],ct);
+                }
+            }
+        }
+        return dp[0];
     }
 };
