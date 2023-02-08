@@ -3,11 +3,9 @@ public:
     
     int helper(int st,int en,vector<int>&v,vector<vector<int>>&dp)
     {
-        if(st==en)
-          return v[st-1]*v[st]*v[st+1];
-        
         if(st>en)
             return 0;
+        
         if(dp[st][en]!=-1)
             return dp[st][en];
         int ans=INT_MIN;
