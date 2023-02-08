@@ -1,36 +1,45 @@
 class Solution {
 public:
     string longestPalindrome(string s) {
-        string a=s;
         int n=s.size();
-        reverse(a.begin(),a.end());
-        int dp[n+1][n+1];
-        memset(dp,0,sizeof(dp));
-        int maxLength=0, start=0;
-        for(int i=1;i<=n;i++){
-            for(int j=1;j<=n;j++){
-                if(s[i-1]==a[j-1]){
-                    dp[i][j]=1+dp[i-1][j-1];
-                    int rIdx=i;
-                    int idx=j-dp[i][j]+1;
-                    if(n-rIdx+1==idx){     //Here we check if the reverse string original idx is same as original string idx.
-                        if(maxLength<dp[i][j]){ 
-                            maxLength=dp[i][j];
-                            start=i;
-                        }
-                    }
-                }
-                else{
+        
+        vector<vector<int>>dp(n+1,vector<int>(n+1,0));
+        int start=1,mxLength=1;
+        
+        for(int i=1;i<=n;i++)
+        {
+            dp[i][i]=1;
+            
+            if(i!=n && s[i-1]==s[i])
+            {
+                dp[i][i+1]=1;
+                start=i;
+                mxLength=2;
+            }
+        }
+        
+        for(int length=3;length<=n;length++)
+        {
+            for(int i=1;i<=n-length+1;i++)
+            {
+                int j=i+length-1;
+                if(s[i-1]==s[j-1])
+                    dp[i][j]=dp[i+1][j-1];
+                else
                     dp[i][j]=0;
+                
+                if(dp[i][j]==1)
+                {
+                    start=i;
+                    mxLength=length;
                 }
             }
         }
-        string res;
-        while(maxLength>0){
-            res.push_back(s[start-1]);
-            start--;
-            maxLength--;
-        }
-        return res;
+        string ans;
+        int st=start-1,en=start+mxLength-1;
+        
+        for(int i=st;i<en;i++)
+            ans+=s[i];
+        return ans;
     }
 };
