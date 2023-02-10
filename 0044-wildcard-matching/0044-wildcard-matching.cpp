@@ -27,11 +27,10 @@ public:
         
         if(p[idx2-1]=='*')
         {
-            bool first=helper(idx1,idx2-1,s,p,dp);
-            bool second=helper(idx1-1,idx2,s,p,dp);
-            bool third=helper(idx1-1,idx2-1,s,p,dp);
+            bool first=helper(idx1-1,idx2,s,p,dp);
+            bool second=helper(idx1,idx2-1,s,p,dp);
             
-            return dp[idx1][idx2]=first||second||third;
+            return dp[idx1][idx2]=first||second;
         }
         return dp[idx1][idx2]=false;
 }
