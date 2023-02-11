@@ -1,46 +1,55 @@
-#define pii pair<int, pair<int, int>>
-#define pi pair<int, int>
 class Solution {
 public:
-    vector<int> shortestAlternatingPaths(int n, vector<vector<int>>& red, vector<vector<int>>& blue) 
-    {
-        vector<pi>adj[n];
-        for(auto i: red)
+    vector<int> shortestAlternatingPaths(int n, vector<vector<int>>& red, vector<vector<int>>& blue) {
+        vector<pair<int,int>>adj[n];
+        map<pair<int,int>,int>vis;
+        
+        for(auto it:red)
         {
-            int a=i[0], b=i[1];
-            adj[a].push_back({b, 1});
-        }
-        for(auto i: blue)
+            vis[{it[1],1}]=0;
+            adj[it[0]].push_back({it[1],1});
+        } 
+      
+        for(auto it:blue)
         {
-            int a=i[0], bb=i[1];
-            adj[a].push_back({bb, 0});
-        }
-        vector<int>dis(n, 1e8);
-        queue<pii>p;
-        p.push({0, {-1, 0}}); // {distance, {parentColor(0 or 1, -1 for 0th node), node}}
+            vis[{it[1],2}]=0;
+            adj[it[0]].push_back({it[1],2});
+        }  
+        
+        vector<int>dis(n,INT_MAX);
         dis[0]=0;
-        while(!p.empty())
+        
+        queue<pair<int,pair<int,int>>>q;
+        q.push({0,{-1,0}}); // {curr node,{parent color,curr dis}}
+        
+        while(!q.empty())
         {
-            int curDis=p.front().first;
-            int parColor=p.front().second.first;
-            int parNode=p.front().second.second;
-            p.pop();
-            for(auto &it: adj[parNode])
+            int curr=q.front().first;
+            int parent=q.front().second.first;
+            int d=q.front().second.second;
+            
+            q.pop();
+            
+            for(auto it:adj[curr])
             {
-                int curNode=it.first;
-                int curColor=it.second;
-                if(curColor != parColor and curNode != -1)
+                int nxt=it.first;
+                int clr=it.second;
+                
+                if(clr!=parent && vis[{nxt,clr}]==0)
                 {
-                    p.push({curDis+1, {curColor, curNode}});
-                    if(curDis+1<dis[curNode])
-                    {
-                        dis[curNode]=curDis+1;
-                    }
-                    it.first=-1;
+                    q.push({nxt,{clr,d+1}});
+                    vis[{nxt,clr}]=1;
+                    
+                    if(dis[nxt]>d+1)
+                        dis[nxt]=d+1;
                 }
             }
         }
-        for(auto &it: dis) if(it==1e8) it=-1;
+        for(int i=0;i<n;i++)
+        {
+            if(dis[i]==INT_MAX)
+                dis[i]=-1;
+        }
         return dis;
     }
 };
