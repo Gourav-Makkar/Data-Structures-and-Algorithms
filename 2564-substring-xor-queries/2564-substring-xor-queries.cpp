@@ -1,7 +1,7 @@
 class Solution {
 public:
     vector<vector<int>> substringXorQueries(string s, vector<vector<int>>& queries) {
-        unordered_map<long long,vector<int>>m;
+        unordered_map<int,vector<int>>m;
         vector<vector<int>>ans;
         int n=s.size();
         for(int i=0;i<n;i++)
@@ -14,7 +14,7 @@ public:
                 continue;
             }
             
-            long long curr=0;
+            int curr=0;
             for(int j=i;j<=min(i+31,n-1);j++)
             {
                 curr=(curr<<1);
@@ -27,7 +27,7 @@ public:
         
         for(int i=0;i<queries.size();i++)
         {
-            long long target=queries[i][0]^queries[i][1];
+            int target=queries[i][0]^queries[i][1];
             
             if(m.find(target)==m.end())
                 ans.push_back({-1,-1});
