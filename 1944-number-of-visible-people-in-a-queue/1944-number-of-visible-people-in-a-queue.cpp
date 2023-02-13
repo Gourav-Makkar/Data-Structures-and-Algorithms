@@ -4,21 +4,21 @@ public:
         int n=heights.size();
         vector<int>ans(n);
         stack<int>st;
-        st.push(heights[n-1]);
         ans[n-1]=0;
+        st.push(n-1);
         
         for(int i=n-2;i>=0;i--)
         {
             int ct=0;
-            while(!st.empty() && heights[i]>st.top())
+            while(!st.empty() && heights[i]>heights[st.top()])
             {
                 ct++;
                 st.pop();
             }
-            int res=(st.empty())?ct:ct+1;
             
-            ans[i]=res;
-            st.push(heights[i]);
+            int curr=(st.empty())?ct: ct+1;
+            ans[i]=curr;
+            st.push(i);
         }
         return ans;
     }
