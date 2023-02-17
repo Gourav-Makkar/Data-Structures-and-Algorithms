@@ -31,14 +31,21 @@ class Solution {
         
         for(auto it:GeekNum)
           ans.push_back(it);
-          
-        for(int i=k;i<n;i++)
+        
+        long long sum=0;
+        int i=0,j=0;
+        
+        while(j<n-1)
         {
-            long long temp=0;
-            for(int j=i-k;j<i;j++)
-              temp+=ans[j];
-              
-            ans.push_back(temp);
+            sum+=ans[j];
+            
+            if(j-i+1==k)
+            {
+                ans.push_back(sum);
+                sum-=ans[i];
+                i++;
+            }
+            j++;
         }
         return ans.back();
     }
