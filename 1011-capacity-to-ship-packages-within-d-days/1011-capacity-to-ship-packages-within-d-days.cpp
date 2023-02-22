@@ -1,16 +1,14 @@
 class Solution {
 public:
     
-    bool check(vector<int>&weights,int mxWeight,int days)
+    bool check(vector<int>&weights,int mx,int days)
     {
-        int ct=1;
-        int cs=0;
+        int cs=0,ct=1;
         for(auto it:weights)
         {
-            if(it>mxWeight)
-                return false;
-            cs+=it;
-            if(cs>mxWeight)
+            if(cs+it<=mx)
+              cs+=it;
+            else
             {
                 ct++;
                 cs=it;
@@ -20,12 +18,15 @@ public:
     }
     
     int shipWithinDays(vector<int>& weights, int days) {
-        int st=1,en=0;
-        
-        for(auto it:weights)
-            en+=it;
-        
+        // sort(weights.begin(),weights.end());
         int ans;
+        int st=INT_MIN,en=0;
+        for(auto it:weights)
+        {
+            st=max(st,it);
+            en+=it;
+        }
+        
         while(st<=en)
         {
             int mid=st+(en-st)/2;
