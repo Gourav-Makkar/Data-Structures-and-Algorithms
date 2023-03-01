@@ -1,21 +1,39 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution {
 public:
-    vector<TreeNode*> vec;
-    unordered_map<string,int> ump;
-    string solve(TreeNode* root){
-        if(!root) return "$";
-        string left = solve(root->left);
-        string right = solve(root->right);
-        string s = to_string(root->val) +"$"+left+"$"+right;
-        if(ump[s]==1){
-            vec.push_back(root);
-        }
-        ump[s]++;
-        return s;
+    unordered_map<string,int>m;
+    string helper(TreeNode* root,vector<TreeNode*>&ans)
+    {
+        if(root==NULL)
+            return "@";
+        
+        string temp= to_string(root->val) + "-" + helper(root->left,ans) + "-" + helper(root->right,ans);
+        
+        if(m[temp]==1)
+            ans.push_back(root);
+        m[temp]++;
+           
+        // cout<<temp<<endl;
+        
+        return temp;
     }
+    
     vector<TreeNode*> findDuplicateSubtrees(TreeNode* root) {
-        if(!root) return vec;
-        solve(root);
-        return vec;
+        vector<TreeNode*>ans;
+        
+        if(!root)
+            return ans;
+        helper(root,ans);
+        return ans;
     }
 };
