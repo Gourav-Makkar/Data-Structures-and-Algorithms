@@ -19,6 +19,6 @@ public:
         // if(st>=n)
         //     return arr[en]+k;
         
-        return arr[en]+(k-(arr[en]-en-1));
+        return st+k;
     }
 };
