@@ -37,7 +37,17 @@ public:
             vector<int>f;
             findPrimeFact(nums[i],f);
             for(auto it:f)
-                common += (curr[it]++ == 0) - (curr[it] == m[it]);
+            {
+                // common += (curr[it]++ == 0) - (curr[it] == m[it]);
+                
+                if(curr[it]==0)
+                {
+                    common++;
+                }
+                curr[it]++;
+                if(m[it]==curr[it])
+                    common--;
+            }
             
             if(common==0 && i!=n-1)
                 return i;
