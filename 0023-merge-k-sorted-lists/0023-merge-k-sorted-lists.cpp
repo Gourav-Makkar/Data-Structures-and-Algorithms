@@ -11,15 +11,15 @@
 class Solution {
 public:
     
-    void merge(ListNode* head1,ListNode* head2,ListNode* &head)
+    void mergetwo(ListNode* head1,ListNode* head2,ListNode* &head)
     {
         ListNode* tail=NULL;
         
-        while(head1!=NULL && head2!=NULL)
+        while(head1 && head2)
         {
-            if(head1->val<head2->val)
+            if(head1->val<=head2->val)
             {
-                if(head==NULL)
+                if(!head)
                 {
                     head=head1;
                     tail=head1;
@@ -33,7 +33,7 @@ public:
             }
             else
             {
-                if(head==NULL)
+                if(!head)
                 {
                     head=head2;
                     tail=head2;
@@ -46,39 +46,32 @@ public:
                 head2=head2->next;
             }
         }
-        
-        if(head1==NULL)
+        if(tail==NULL)
         {
-            if(head==NULL)
-            {
+            if(!head1)
                 head=head2;
-                tail=head2;
-            }
             else
-                tail->next=head2;
-        }
-        if(head2==NULL)
-        {
-            if(head==NULL)
-            {
                 head=head1;
-                tail=head1;
-            }
+        }
+        else
+        {
+            if(!head1)
+                tail->next=head2;
             else
                 tail->next=head1;
         }
-       
     }
     
-    void mergeLists(vector<ListNode*>& lists,int st,int en,ListNode* &head)
+    void merge(vector<ListNode*>&lists,int st,int en,ListNode* &head)
     {
-        ListNode* tail=NULL;
         if(st==en)
         {
+            ListNode* tail=NULL;
             ListNode* curr=lists[st];
+            
             while(curr!=NULL)
             {
-                if(head==NULL)
+                if(!head)
                 {
                     head=curr;
                     tail=curr;
@@ -94,31 +87,25 @@ public:
         }
         if(en-st==1)
         {
-            ListNode* head1=lists[st];
-            ListNode* head2=lists[en];
-            
-            merge(head1,head2,head);
+            mergetwo(lists[st],lists[en],head);
             return;
         }
         
         int mid=st+(en-st)/2;
-        
         ListNode* head1=NULL,*head2=NULL;
         
-        mergeLists(lists,st,mid,head1);
-        mergeLists(lists,mid+1,en,head2);
+        merge(lists,st,mid,head1);
+        merge(lists,mid+1,en,head2);
         
-        merge(head1,head2,head);
+        mergetwo(head1,head2,head);
     }
     
     ListNode* mergeKLists(vector<ListNode*>& lists) {
         if(lists.size()==0)
-            return NULL;
+             return NULL;
         ListNode* head=NULL;
-        int n=lists.size();
         
-        mergeLists(lists,0,n-1,head);
-        
+        merge(lists,0,lists.size()-1,head);
         return head;
     }
 };
