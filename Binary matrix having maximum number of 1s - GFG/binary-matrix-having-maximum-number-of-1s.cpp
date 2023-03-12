@@ -12,15 +12,20 @@ using namespace std;
 class Solution {
 public:
     vector<int> findMaxRow(vector<vector<int>> mat, int n) {
-        int r,mx=INT_MIN;
-     
+        int r=0,mx=0;
+        int j=n-1;
+        
         for(int i=0;i<n;i++)
         {
-            int idx=lower_bound(mat[i].begin(),mat[i].end(),1)-mat[i].begin();
-            if(n-idx>mx)
+            for(;j>=0;j--)
             {
-                mx=n-idx;
-                r=i;
+                if(mat[i][j]==1)
+                {
+                    mx++;
+                    r=i;
+                }
+                else
+                  break;
             }
         }
         return {r,mx};
