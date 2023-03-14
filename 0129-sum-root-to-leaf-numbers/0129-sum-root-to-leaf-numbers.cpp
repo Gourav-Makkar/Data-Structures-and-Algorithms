@@ -12,27 +12,30 @@
 class Solution {
 public:
     
-    void helper(TreeNode* root,int curr,int &ans)
+    void helper(TreeNode* root,string curr,int &ans)
     {
         if(root==NULL)
             return;
-        if(root->left==NULL && root->right==NULL)
+        
+        if(!root->left && !root->right)
         {
-            curr=curr*10+root->val;
-            ans+=curr;
+            curr+=to_string(root->val);
+            ans+=stoi(curr);
+            curr.pop_back();
             return;
         }
-        curr=curr*10+root->val;
+        
+        curr+=to_string(root->val);
         helper(root->left,curr,ans);
         helper(root->right,curr,ans);
-        
-        curr=curr/10;
+        curr.pop_back();
     }
     
     int sumNumbers(TreeNode* root) {
-        int ans=0,curr=0;
+        int ans=0;
         
-        helper(root,curr,ans);
+        helper(root,"",ans);
         return ans;
+        
     }
 };
