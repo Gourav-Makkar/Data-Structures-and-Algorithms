@@ -12,45 +12,26 @@
 class Solution {
 public:
     bool isCompleteTree(TreeNode* root) {
+        bool prevNull=false;
         
-        int tl=-1;
-        TreeNode* temp=root;
-        while(temp)
-        {
-            tl++;
-            temp=temp->left;
-        }
-        
-        int cl=0;
-        queue<pair<TreeNode*,int>>q;
-        q.push({root,1});
-        
-        int prev=-1;
+        queue<TreeNode*>q;
+        q.push(root);
         
         while(!q.empty())
         {
-            int n=q.size();
-            if(cl!=tl && pow(2,cl)!=n)
-              return false;
-                
-            for(int i=0;i<n;i++)
+            TreeNode* curr=q.front();
+            q.pop();
+            
+            if(!curr)
+                prevNull=true;
+            else
             {
-                TreeNode* curr=q.front().first;
-                int node=q.front().second;
-                q.pop();
-                if(prev!=-1)
-                {
-                    if(prev+1!=node)
-                        return false;
-                }
-                prev=node;
-                
-                if(curr->left)
-                    q.push({curr->left,2*node});
-                if(curr->right)
-                    q.push({curr->right,2*node+1});
+                if(prevNull)
+                    return false;
+
+                q.push(curr->left);
+                q.push(curr->right);
             }
-            cl++;
         }
         return true;
     }
