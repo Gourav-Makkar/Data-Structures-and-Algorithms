@@ -31,10 +31,7 @@ public:
         {
             int n=q.size();
             if(cl!=tl && pow(2,cl)!=n)
-            {
-                cout<<n<<endl;
-                return false;
-            }
+              return false;
                 
             for(int i=0;i<n;i++)
             {
