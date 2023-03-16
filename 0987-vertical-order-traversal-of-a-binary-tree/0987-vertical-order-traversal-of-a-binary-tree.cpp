@@ -15,38 +15,44 @@ public:
         map<int,vector<int>>m;
         queue<pair<TreeNode*,int>>q;
         q.push({root,0});
-        m[0].push_back(root->val);
         
         while(!q.empty())
         {
-            queue<pair<TreeNode*,int>>tq;
-            while(!q.empty())
+            int n=q.size();
+            map<int,vector<int>>temp;
+            for(int i=0;i<n;i++)
             {
                 TreeNode* curr=q.front().first;
                 int lvl=q.front().second;
                 q.pop();
                 
+                temp[lvl].push_back(curr->val);
+                
                 if(curr->left)
-                    tq.push({curr->left,lvl-1});
+                    q.push({curr->left,lvl-1});
                 if(curr->right)
-                    tq.push({curr->right,lvl+1});    
+                    q.push({curr->right,lvl+1});
             }
-            q=tq;
-            vector<pair<int,int>>v;
-            while(!tq.empty())
+            for(auto it:temp)
             {
-                v.push_back({tq.front().second,tq.front().first->val});
-                tq.pop();
+                vector<int>v;
+                for(auto it1:it.second)
+                    v.push_back(it1);
+                sort(v.begin(),v.end());
+                
+                for(auto it1:v)
+                    m[it.first].push_back(it1);
             }
-            sort(v.begin(),v.end());
-            
-            for(auto it:v)
-                m[it.first].push_back(it.second);
         }
         vector<vector<int>>ans;
-        for(auto it:m)
-            ans.push_back(it.second);
-        return ans;
         
+        for(auto it:m)
+        {
+            vector<int>curr;
+            for(auto it1:it.second)
+                curr.push_back(it1);
+            ans.push_back(curr);
+        }
+        return ans;
     }
 };
