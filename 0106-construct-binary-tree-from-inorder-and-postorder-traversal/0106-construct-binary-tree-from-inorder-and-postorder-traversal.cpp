@@ -12,36 +12,39 @@
 class Solution {
 public:
     
-    int find(int val,vector<int>&inorder)
-    {
-        int n=inorder.size();
-        for(int i=0;i<n;i++)
-        {
-            if(inorder[i]==val)
-                return i;
-        }
-        return -1;
-    }
+    // int find(int val,vector<int>&inorder)
+    // {
+    //     int n=inorder.size();
+    //     for(int i=0;i<n;i++)
+    //     {
+    //         if(inorder[i]==val)
+    //             return i;
+    //     }
+    //     return -1;
+    // }
     
-    TreeNode* make(int &idx,vector<int>&postorder,int st,int en,vector<int>&inorder)
+    TreeNode* make(int &idx,vector<int>&postorder,int st,int en,unordered_map<int,int>&m)
     {
         if(st>en)
             return NULL;
         
         int val=postorder[idx--];
-        int pos=find(val,inorder);
+        int pos=m[val];
         TreeNode* root=new TreeNode(val);
         
-        root->right=make(idx,postorder,pos+1,en,inorder);
-        root->left=make(idx,postorder,st,pos-1,inorder);
+        root->right=make(idx,postorder,pos+1,en,m);
+        root->left=make(idx,postorder,st,pos-1,m);
         
         return root;
     }
     
     TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
-        int n=inorder.size();
+        int n=inorder.size(),idx=n-1;
+        unordered_map<int,int>m;
         
-        int idx=n-1;
-        return make(idx,postorder,0,n-1,inorder);
+        for(int i=0;i<n;i++)
+            m[inorder[i]]=i;
+        
+        return make(idx,postorder,0,n-1,m);
     }
 };
