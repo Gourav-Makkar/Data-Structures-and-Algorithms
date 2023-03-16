@@ -12,22 +12,20 @@
 class Solution {
 public:
     
-    int helper(TreeNode* root,int &ans)
+    int height(TreeNode* root)
     {
         if(root==NULL)
             return 0;
-        
-        int lh=helper(root->left,ans);
-        int rh=helper(root->right,ans);
-        
-        ans=max(ans,lh+rh);
-        
-        return 1+max(lh,rh);
+        return 1+max(height(root->left),height(root->right));
     }
     
     int diameterOfBinaryTree(TreeNode* root) {
-        int ans=INT_MIN;
-        helper(root,ans);
-        return ans;
+        if(root==NULL)
+            return 0;
+        
+        int lh=height(root->left);
+        int rh=height(root->right);
+        
+        return max(lh+rh,max(diameterOfBinaryTree(root->left),diameterOfBinaryTree(root->right)));
     }
 };
