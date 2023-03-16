@@ -16,6 +16,7 @@ public:
     {
         if(root==NULL)
             return NULL;
+        
         TreeNode* temp=root->right;
         
         root->right=helper(root->left);
@@ -32,8 +33,6 @@ public:
     }
     
     void flatten(TreeNode* root) {
-        if(root==NULL)
-            return;
         helper(root);
     }
 };
