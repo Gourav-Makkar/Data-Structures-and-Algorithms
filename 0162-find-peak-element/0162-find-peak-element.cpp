@@ -9,7 +9,7 @@ public:
         while(st<=en)
         {
             int mid=st+(en-st)/2;
-            if((mid==0 || nums[mid]>nums[mid-1]) && (mid==n-1 || nums[mid]>nums[mid+1]))
+            if((mid==st || nums[mid]>nums[mid-1]) && (mid==en || nums[mid]>nums[mid+1]))
                 return mid;
             else if(nums[mid]<nums[mid+1])
                 st=mid+1;
