@@ -1,45 +1,65 @@
 class Solution {
 public:
     
-    void dfs(int curr,vector<int>adj[],vector<int>&vis,int &ct)
-    {
-        vis[curr]=1;
-        ct++;
+//     void dfs(int curr,vector<int>adj[],vector<int>&vis,int &ct)
+//     {
+//         vis[curr]=1;
+//         ct++;
         
-        for(auto it:adj[curr])
-        {
-            if(!vis[it])
-                dfs(it,adj,vis,ct);
-        }
+//         for(auto it:adj[curr])
+//         {
+//             if(!vis[it])
+//                 dfs(it,adj,vis,ct);
+//         }
+//     }
+    int findPar(int curr,vector<int>&par)
+    {
+        if(par[curr]==curr)
+            return curr;
+        return par[curr]=findPar(par[curr],par);
     }
     
     long long countPairs(int n, vector<vector<int>>& edges) {
+        vector<int>par(n),size(n,1);
+        for(int i=0;i<n;i++)
+            par[i]=i;
         
-        vector<int>adj[n];
         for(auto it:edges)
         {
-            adj[it[0]].push_back(it[1]);
-            adj[it[1]].push_back(it[0]);
-        }
-        
-        vector<int>sizes,vis(n,0);
-        for(int i=0;i<n;i++)
-        {
-            if(!vis[i])
+            int pu=findPar(it[0],par);
+            int pv=findPar(it[1],par);
+            
+            if(pu==pv)
+                continue;
+            if(size[pu]<size[pv])
             {
-                int ct=0;
-                dfs(i,adj,vis,ct);
-                sizes.push_back(ct);
+                size[pv]+=size[pu];
+                size[pu]=0;
+                par[pu]=pv;
+            }
+            else
+            {
+                size[pu]+=size[pv];
+                size[pv]=0;
+                par[pv]=pu;
             }
         }
+        vector<int>temp;
         long long total=0,ans=0;
-        for(auto it:sizes)
-            total+=it;
         
-        for(auto it:sizes)
+        for(auto it:size)
+        {
+            if(it>0)
+            {
+                temp.push_back(it);
+                total+=it;
+            }
+        }
+        
+        for(auto it:temp)
         {
             total-=it;
-            ans+=total*it;
+            ans+=it*total;
         }
         return ans;
     }
