@@ -28,9 +28,6 @@ public:
         
         for(int i=0;i<n;i++)
         {
-            if(i==n-1 && nums[i]>prev)
-                break;
-            
             int val=findPrime(nums[i]-prev-1);
             if(val==-1)
             {
