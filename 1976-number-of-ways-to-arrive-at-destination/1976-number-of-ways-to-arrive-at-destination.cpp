@@ -1,43 +1,44 @@
 #define ll long long
 class Solution {
 public:
-    
     int countPaths(int n, vector<vector<int>>& roads) {
-        vector<vector<ll>>adj[n];
-        int mod=1e9+7;
+        vector<pair<int,int>>adj[n];
+        int mod=1000000007,ans=0;
+        ll mn=INT_MAX;
+        
         for(auto it:roads)
         {
             adj[it[0]].push_back({it[1],it[2]});
             adj[it[1]].push_back({it[0],it[2]});
         }
         
-        priority_queue<pair<ll,int>,vector<pair<ll,int>>,greater<pair<ll,int>>>pq;
         vector<ll>time(n,LONG_MAX);
-        vector<ll>ways(n,0);
-        
         time[0]=0;
-        ways[0]=1;
+        
+        priority_queue<pair<ll,ll>,vector<pair<ll,ll>>,greater<pair<ll,ll>>>pq;
         pq.push({0,0});
+        vector<int>ways(n,0);
+        ways[0]=1;
         
         while(!pq.empty())
         {
+            ll curr=pq.top().second;
             ll t=pq.top().first;
-            ll node=pq.top().second;
             pq.pop();
             
-            for(auto it:adj[node])
+            for(auto it:adj[curr])
             {
-                if(t+it[1]<time[it[0]])
+                ll node=it.first,dis=it.second;
+                if(t+dis<time[node])
                 {
-                    time[it[0]]=t+it[1];
-                    ways[it[0]]=ways[node]  ;
-                    pq.push({time[it[0]],it[0]});
+                    time[node]=t+dis;
+                    ways[node]=ways[curr];
+                    pq.push({time[node],node});
                 }
-                else if(t+it[1]==time[it[0]])
-                  ways[it[0]]=(ways[it[0]]+ways[node])%mod;
+                else if(t+dis==time[node])
+                    ways[node]=(ways[node]+ways[curr])%mod;
             }
         }
-        
-        return ways[n-1]%mod;
+        return ways[n-1];
     }
 };
