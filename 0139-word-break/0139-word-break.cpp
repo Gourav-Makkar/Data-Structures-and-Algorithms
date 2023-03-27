@@ -9,11 +9,6 @@ public:
         {
             if(prev==n)
                 return true;
-            
-            string curr=s.substr(prev,idx-prev);
-            if(st.find(curr)!=st.end())
-                return true;
-            
             return false;
         }
         
