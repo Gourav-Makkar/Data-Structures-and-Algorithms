@@ -10,14 +10,7 @@ public:
             {
                 curr.pop_back();
                 ans.insert(curr);
-                return;
-            }
-            string temp=s.substr(prev,idx-prev);
-            if(st.find(temp)!=st.end())
-            {
-                curr+=temp;
-                ans.insert(curr);
-            }
+            } 
             return;
         }
         
