@@ -1,7 +1,7 @@
 class Solution {
 public:
     
-    void helper(int idx,string &s,int prev,string curr,unordered_set<string>&ans,unordered_set<string>&st)
+    void helper(int idx,string &s,int prev,string curr,vector<string>&ans,unordered_set<string>&st)
     {
         int n=s.size();
         if(idx==n)
@@ -9,7 +9,7 @@ public:
             if(prev==n)
             {
                 curr.pop_back();
-                ans.insert(curr);
+                ans.push_back(curr);
             } 
             return;
         }
@@ -23,7 +23,7 @@ public:
     
     vector<string> wordBreak(string s, vector<string>& wordDict) {
         int n=s.size();
-        unordered_set<string>ans;
+        vector<string>ans;
         unordered_set<string>st;
         
         for(auto it:wordDict)
@@ -31,10 +31,6 @@ public:
         
         helper(0,s,0,"",ans,st);
         
-        vector<string>res;
-        for(auto it:ans)
-            res.push_back(it);
-        
-        return res;
+        return ans;
     }
 };
