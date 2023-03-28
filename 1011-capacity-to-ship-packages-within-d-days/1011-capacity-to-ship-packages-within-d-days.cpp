@@ -1,37 +1,37 @@
 class Solution {
 public:
     
-    bool check(vector<int>&weights,int mx,int days)
+    bool check(int mid,vector<int>&v,int days)
     {
-        int cs=0,ct=1;
-        for(auto it:weights)
+        int ct=1,curr=0;
+        
+        for(int i=0;i<v.size();i++)
         {
-            if(cs+it<=mx)
-              cs+=it;
+            if(curr+v[i]<=mid)
+                curr+=v[i];
             else
             {
+                curr=v[i];
                 ct++;
-                cs=it;
             }
         }
         return ct<=days;
     }
     
     int shipWithinDays(vector<int>& weights, int days) {
-        // sort(weights.begin(),weights.end());
-        int ans;
-        int st=INT_MIN,en=0;
-        for(auto it:weights)
-        {
-            st=max(st,it);
-            en+=it;
-        }
+       int st=INT_MIN,en=0;
         
+       for(auto it:weights)
+       {
+           st=max(st,it);
+           en+=it;
+       }
+        
+       int ans;
         while(st<=en)
         {
             int mid=st+(en-st)/2;
-            
-            if(check(weights,mid,days))
+            if(check(mid,weights,days))
             {
                 ans=mid;
                 en=mid-1;
