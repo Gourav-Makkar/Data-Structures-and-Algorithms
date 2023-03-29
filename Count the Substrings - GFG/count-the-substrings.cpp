@@ -10,22 +10,26 @@ class Solution
     public:
     int countSubstring(string s)
     {
-        int n=s.size(),ans=0;
+        int n=s.size(),ans=0,cs=0,i=0;
         
-        for(int i=0;i<n;i++)
+        unordered_map<int,int>m;
+        
+        while(i<n)
         {
-            int l=0,u=0;
-            for(int j=i;j<n;j++)
-            {
-                if(s[j]>='A' && s[j]<='Z')
-                  l++;
-                  
-                 if(s[j]>='a' && s[j]<='z')
-                  u++;
-                
-                if(l==u)
-                  ans++;
-            }
+            if(s[i]>='A' && s[i]<='Z')
+              cs+=-1;
+            
+            if(s[i]>='a' && s[i]<='z')
+              cs+=1;
+              
+            if(cs==0)
+              ans++;
+            
+            if(m.find(cs)!=m.end())
+              ans+=m[cs];
+            
+            m[cs]++;
+            i++;
         }
         return ans;
     }
