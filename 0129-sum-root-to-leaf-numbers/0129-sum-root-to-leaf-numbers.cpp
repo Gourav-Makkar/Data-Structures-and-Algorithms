@@ -20,22 +20,18 @@ public:
         if(!root->left && !root->right)
         {
             curr+=to_string(root->val);
-            ans+=stoi(curr);
-            curr.pop_back();
+            int temp=stoi(curr);
+            ans+=temp;
             return;
         }
-        
         curr+=to_string(root->val);
         helper(root->left,curr,ans);
         helper(root->right,curr,ans);
-        curr.pop_back();
     }
     
     int sumNumbers(TreeNode* root) {
         int ans=0;
-        
         helper(root,"",ans);
         return ans;
-        
     }
 };
