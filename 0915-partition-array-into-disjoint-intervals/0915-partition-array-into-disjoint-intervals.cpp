@@ -2,16 +2,16 @@ class Solution {
 public:
     int partitionDisjoint(vector<int>& nums) {
         int n=nums.size();
-        int mn=nums[0],mx=nums[0],ans=0;
+        int till_mx=nums[0],overall_mx=nums[0],ans=0;
         
         for(int i=1;i<n;i++)
         {
-            if(nums[i]<mn)
+            if(nums[i]<till_mx)
             {
                 ans=i;
-                mn=mx;
+                till_mx=overall_mx;
             }
-            mx=max(mx,nums[i]);
+           overall_mx=max(overall_mx,nums[i]);
         }
         return ans+1;
     }
