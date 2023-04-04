@@ -11,7 +11,7 @@
  */
 class Solution {
 public:
-    int xlvl=-1,ylvl=-1;
+    int xlvl=0,ylvl=0;
     TreeNode* parx=NULL,*pary=NULL;
     
     void dfs(TreeNode* root,int x,int y,int lvl,TreeNode* par)
