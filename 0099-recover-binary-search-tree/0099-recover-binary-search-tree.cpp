@@ -11,26 +11,28 @@
  */
 class Solution {
 public:
-    TreeNode* temp1=NULL,*temp2=NULL,*prev=NULL;
     
-    void helper(TreeNode* root)
+    void dfs(TreeNode* root,TreeNode* &temp1,TreeNode* &temp2,TreeNode* &prev)
     {
         if(root==NULL)
             return;
-        helper(root->left);
+        dfs(root->left,temp1,temp2,prev);
         
-        if(prev!=NULL && root->val<prev->val)
+        if(prev!=NULL && prev->val>root->val)
         {
-            if(temp1==NULL)
+            if(!temp1)
                 temp1=prev;
             temp2=root;
         }
         prev=root;
-        helper(root->right);
+        
+        dfs(root->right,temp1,temp2,prev);
     }
     
     void recoverTree(TreeNode* root) {
-       helper(root);
-       swap(temp1->val,temp2->val);
+        TreeNode* temp1=NULL,*temp2=NULL,*prev=NULL;
+        dfs(root,temp1,temp2,prev);
+        
+        swap(temp1->val,temp2->val);
     }
 };
