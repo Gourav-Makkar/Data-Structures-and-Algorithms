@@ -1,49 +1,15 @@
 class Solution {
 public:
     
-    bool check(long long mid,vector<int>temp)
-    {
-        vector<long long>nums;
-        for(auto it:temp)
-            nums.push_back(it);
-        
-        for(int i=1;i<nums.size();i++)
-        {
-            if(nums[i-1]<mid)
-            {
-                long long ct=mid-nums[i-1];
-                nums[i]-=ct;
-            }
-            else if(nums[i-1]>mid)
-                return false;
-        }
-        return nums[nums.size()-1]<=mid;
-    }
-    
     int minimizeArrayValue(vector<int>& nums) {
         int n=nums.size();
-        int st=INT_MAX,en=INT_MIN,ans;
+        long long sum=0,ans=INT_MIN;
         
-        for(auto it:nums)
+        for(int i=0;i<n;i++)
         {
-            st=min(st,it);
-            en=max(it,en);
+            sum+=nums[i];
+            ans=max(ans,(sum+i)/(i+1));
         }
-        
-        while(st<=en)
-        {
-            int mid=st+(en-st)/2;
-            
-            // cout<<st<<" "<<en<<endl;
-            
-            if(check(mid,nums))
-            {
-                ans=mid;
-                en=mid-1;
-            }
-            else
-                st=mid+1;
-        }
-        return ans;
+        return (int)ans;
     }
 };
