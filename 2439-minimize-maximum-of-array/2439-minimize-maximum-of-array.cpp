@@ -12,7 +12,6 @@ public:
             if(nums[i-1]<mid)
             {
                 long long ct=mid-nums[i-1];
-                nums[i-1]+=ct;
                 nums[i]-=ct;
             }
             else if(nums[i-1]>mid)
@@ -23,10 +22,13 @@ public:
     
     int minimizeArrayValue(vector<int>& nums) {
         int n=nums.size();
-        int st=0,en=INT_MIN,ans;
+        int st=INT_MAX,en=INT_MIN,ans;
         
         for(auto it:nums)
+        {
+            st=min(st,it);
             en=max(it,en);
+        }
         
         while(st<=en)
         {
