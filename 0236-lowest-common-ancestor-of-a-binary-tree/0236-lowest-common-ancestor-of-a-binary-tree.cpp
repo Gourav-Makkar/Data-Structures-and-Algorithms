@@ -21,10 +21,9 @@ public:
         
         if(l && r)
             return root;
-        
-        if(l && !r)
+        if(!l)
+            return r;
+        else
             return l;
-
-        return r;   
     }
 };
