@@ -1,46 +1,39 @@
 class Solution {
 public:
     bool isValid(string s) {
-        int n=s.size();
         stack<char>st;
         
-        for(int i=0;i<n;i++)
+        for(int i=0;i<s.size();i++)
         {
-            if(st.size()==0)
+            char ch=s[i];
+            if(ch=='(' || ch=='{' || ch=='[')
             {
-                st.push(s[i]);
-                continue;
-            }
-            if(s[i]=='(' || s[i]=='[' || s[i]=='{')
-            {
-                st.push(s[i]);
+                st.push(ch);
                 continue;
             }
             
-            if(s[i]==')')
+            if(ch==')')
             {
                 if(!st.empty() && st.top()=='(')
                     st.pop();
                 else
                     return false;
             }
-               
-            if(s[i]==']')
-            {
-                if(!st.empty() && st.top()=='[')
-                    st.pop();
-                else
-                    return false;
-            }
-           if(s[i]=='}')
+            if(ch=='}')
             {
                 if(!st.empty() && st.top()=='{')
                     st.pop();
                 else
                     return false;
             }
+            if(ch==']')
+            {
+               if(!st.empty() && st.top()=='[')
+                    st.pop();
+                else
+                    return false;
+            }
         }
-        
-        return st.size()==0;
+        return st.empty();
     }
 };
