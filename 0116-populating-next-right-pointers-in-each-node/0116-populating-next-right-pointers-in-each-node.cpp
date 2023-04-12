@@ -18,31 +18,22 @@ public:
 
 class Solution {
 public:
+    
+    void dfs(Node* left,Node* right)
+    {
+        if(left==NULL)
+            return;
+        left->next=right;
+        
+        dfs(left->left,left->right);
+        dfs(left->right,right->left);
+        dfs(right->left,right->right);
+    }
+    
     Node* connect(Node* root) {
         if(root==NULL)
             return NULL;
-        queue<Node*>q;
-        q.push(root);
-        
-        while(!q.empty())
-        {
-            int n=q.size();
-            for(int i=0;i<n;i++)
-            {
-                Node* t1=q.front();
-                q.pop();
-                if(i!=n-1)
-                {
-                    Node* t2=q.front();
-                    t1->next=t2;
-                }
-                if(t1->left)
-                    q.push(t1->left);
-                if(t1->right)
-                    q.push(t1->right);
-            }
-        }
+        dfs(root->left,root->right);
         return root;
     }
-    
 };
