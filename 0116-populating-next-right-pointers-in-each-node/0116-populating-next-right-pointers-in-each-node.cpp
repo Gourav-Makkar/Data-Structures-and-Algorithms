@@ -19,21 +19,37 @@ public:
 class Solution {
 public:
     
-    void dfs(Node* left,Node* right)
-    {
-        if(left==NULL)
-            return;
-        left->next=right;
+//     void dfs(Node* left,Node* right)
+//     {
+//         if(left==NULL)
+//             return;
+//         left->next=right;
         
-        dfs(left->left,left->right);
-        dfs(left->right,right->left);
-        dfs(right->left,right->right);
-    }
+//         dfs(left->left,left->right);
+//         dfs(left->right,right->left);
+//         dfs(right->left,right->right);
+//     }
     
     Node* connect(Node* root) {
         if(root==NULL)
             return NULL;
-        dfs(root->left,root->right);
+        // dfs(root->left,root->right);
+        // return root;
+        
+        Node* left=root;
+        while(left->left)
+        {
+            Node* curr=left;
+            while(curr)
+            {
+                curr->left->next=curr->right;
+                if(curr->next)
+                    curr->right->next=curr->next->left;
+                
+                curr=curr->next;
+            }
+            left=left->left;
+        }
         return root;
     }
 };
