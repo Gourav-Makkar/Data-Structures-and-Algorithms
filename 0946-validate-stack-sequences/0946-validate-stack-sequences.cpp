@@ -16,6 +16,6 @@ public:
                 }
             }
         }
-        return idx==m && st.empty();
+        return idx==m;
     }
 };
