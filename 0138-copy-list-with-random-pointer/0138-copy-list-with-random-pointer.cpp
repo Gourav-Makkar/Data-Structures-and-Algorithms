@@ -17,43 +17,43 @@ public:
 class Solution {
 public:
     Node* copyRandomList(Node* head) {
-       Node* curr=head;
+        Node* curr=head,*newHead=NULL;
+        unordered_map<Node*,Node*>m;
         
-       while(curr!=NULL)
-       {
-           int v=curr->val;
-           Node* temp=new Node(v);
-           temp->next=curr->next;
-           curr->next=temp;
-           curr=temp->next;
-       }
-        
-       curr=head;
-       while(curr!=NULL)
-       {
-           Node* temp=curr->next;
-           if(curr->random!=NULL)
-               temp->random=curr->random->next;
-           curr=temp->next;
-       }
-       Node* h=NULL,*t=NULL;
-       curr=head;
-       while(curr!=NULL)
-       {
-           if(h==NULL)
-           {
-               h=curr->next;
-               t=curr->next;
-           }
-           else
-           {
-               t->next=curr->next;
-               t=t->next;
-           }
-               
-           curr->next=curr->next->next;
-           curr=curr->next;
-       }
-        return h;
+        while(curr!=NULL)
+        {
+            //creating new curr node
+            if(m.find(curr)==m.end())
+            {
+                Node* temp=new Node(curr->val);
+            
+                if(newHead==NULL)
+                  newHead=temp;
+                m[curr]=temp;
+            }
+            
+            //handling next pointer
+            Node* temp;
+            if(curr->next!=NULL && m.find(curr->next)==m.end())
+            {
+                temp=new Node(curr->next->val);
+                m[curr->next]=temp;
+            }
+            if(curr->next)
+                m[curr]->next=m[curr->next];
+            
+            //handling random pointer
+            if(curr->random!=NULL && m.find(curr->random)==m.end())
+            {
+                temp=new Node(curr->random->val);
+                m[curr->random]=temp;
+            }
+            
+            if(curr->random)
+                m[curr]->random=m[curr->random];
+            
+            curr=curr->next;
+        }
+        return newHead;
     }
 };
