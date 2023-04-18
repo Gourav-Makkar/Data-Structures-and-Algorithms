@@ -85,15 +85,15 @@ public:
 class Solution {
 public:
     
-    bool checkBst(Node* root,long long mn,long long mx)
+    bool checkBst(Node* root,int mn,int mx)
     {
         if(root==NULL)
             return true;
         
-        if((long long)root->data<=mn || (long long)root->data>=mx)
+        if(root->data<=mn || root->data>=mx)
             return false;
         
-        return checkBst(root->left,mn,(long long)root->data) && checkBst(root->right,(long long)root->data,mx);
+        return checkBst(root->left,mn,root->data) && checkBst(root->right,root->data,mx);
     }
     
     void countNodes(Node* root,int &ct)
@@ -114,7 +114,7 @@ public:
         int ls=dfs(root->left,target,ans);
         int rs=dfs(root->right,target,ans);
         
-        if(root->data+ls+rs == target && checkBst(root,LLONG_MIN,LLONG_MAX))
+        if(root->data+ls+rs == target && checkBst(root,INT_MIN,INT_MAX))
         {
           int ct=0;
           countNodes(root,ct);
