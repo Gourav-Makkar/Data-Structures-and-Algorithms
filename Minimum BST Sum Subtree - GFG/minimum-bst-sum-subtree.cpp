@@ -118,7 +118,7 @@ public:
         {
           int ct=0;
           countNodes(root,ct);
-          ans=min(ans,ct);
+          ans=ct;
           return target;
         }
         
@@ -126,10 +126,8 @@ public:
     }
 
     int minSubtreeSumBST(int target, Node *root) {
-        int ans=INT_MAX;
+        int ans=-1;
         dfs(root,target,ans);
-        if(ans==INT_MAX)
-          return -1;
         return ans;
     }
 };
