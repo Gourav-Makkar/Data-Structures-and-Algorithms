@@ -14,35 +14,30 @@ public:
     int widthOfBinaryTree(TreeNode* root) {
         queue<pair<TreeNode*,long long>>q;
         q.push({root,1});
-        long long ans=1;
+        long long ans=0;
         
         while(!q.empty())
         {
             int n=q.size();
-            long long l,r;
-            long long mn=q.front().second;
-            
+            long long lc=0,rc=0,mn=q.front().second;
             for(int i=0;i<n;i++)
             {
-                auto p=q.front();
-                TreeNode* temp=p.first;
-                long long val=p.second;
-                
+                TreeNode* curr=q.front().first;
+                long long pos=(q.front().second) - mn;
                 q.pop();
                 
                 if(i==0)
-                    l=val;
+                    lc=pos;
                 if(i==n-1)
-                    r=val;
+                    rc=pos;
                 
-                if(temp->left)
-                    q.push({temp->left,2*val - mn});
-                if(temp->right)
-                    q.push({temp->right,2*val+1 - mn});
+                if(curr->left)
+                    q.push({curr->left,2*pos});
+                if(curr->right)
+                    q.push({curr->right,2*pos+1});
             }
-            ans=max(ans,r-l+1);
+             ans=max(ans,rc-lc+1);
         }
-        
         return ans;
     }
 };
