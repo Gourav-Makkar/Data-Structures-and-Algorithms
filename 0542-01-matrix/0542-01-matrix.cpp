@@ -36,7 +36,7 @@ public:
                 int nr=cr+temp[i-1];
                 int nc=cc+temp[i];
                 
-                if(nr>=0 && nr<n && nc>=0 && nc<m && mat[nr][nc]==1)
+                if(nr>=0 && nr<n && nc>=0 && nc<m && mat[nr][nc]!=-1)
                 {
                     q.push({nr,nc,dis+1});
                     mat[nr][nc]=-1;
