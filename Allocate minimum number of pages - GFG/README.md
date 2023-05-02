@@ -1,11 +1,8 @@
 # Allocate minimum number of pages
 ## Hard
-<div class="problems_problem_content__Xm_eO"><p><span style="font-size:18px">You are given <strong>N </strong>number of books. Every <strong>ith</strong> book has<strong> Ai</strong> number of pages.&nbsp;</span><br>
-<span style="font-size:18px">You have to allocate contiguous&nbsp;books to <strong>M </strong>number of students. There can be many ways or permutations to do so. In each permutation, one of the M students will be allocated the maximum number of pages. Out of all these permutations, the task is to find that particular permutation in which the maximum number of pages allocated to a student is the minimum of those in all the other permutations and print this minimum value.</span></p>
+<div class="problems_problem_content__Xm_eO"><p><span style="font-size:18px">You have <strong>N</strong> books, each with <strong>Ai</strong> number of pages. <strong>M</strong> students need to be allocated contiguous books, with each student getting at least one book. Out of all the permutations, the goal is to find the permutation where the student with the most pages allocated to him gets the minimum number of pages, out of all possible permutations.</span></p>
 
-<p><span style="font-size:18px">Each book will be allocated to exactly one student. Each student has to be allocated at least one book.</span></p>
-
-<p><span style="font-size:18px">Note: Return <strong>-1</strong> if a valid assignment is not possible, and allotment should be in contiguous order (see the explanation for better understanding).</span></p>
+<p><span style="font-size:18px"><strong>Note</strong>: Return <strong>-1</strong> if a valid assignment is not possible, and allotment should be in contiguous order (see the explanation for better understanding).</span></p>
 
 <p>&nbsp;</p>
 
@@ -17,12 +14,12 @@ A[] = {12,34,67,90}
 M = 2
 <strong>Output:</strong>113
 <strong>Explanation:</strong>Allocation can be done in 
-following ways:{12} and {34, 67, 90} 
-Maximum Pages = 191{12, 34} and {67, 90} 
-Maximum Pages = 157{12, 34, 67} and {90} 
-Maximum Pages =113. Therefore, the minimum 
-of these cases is 113, which is selected 
-as the output.</span></pre>
+following ways:
+{12} and {34, 67, 90} Maximum Pages = 191
+{12, 34} and {67, 90} Maximum Pages = 157
+{12, 34, 67} and {90} Maximum Pages =113.
+Therefore, the minimum of these cases is 113,
+which is selected as the output.</span></pre>
 
 <p><br>
 <span style="font-size:18px"><strong>Example 2:</strong></span></p>
