@@ -11,45 +11,45 @@ using namespace std;
 class Solution 
 {
     public:
-    //Function to find minimum number of pages.
     
-    bool check(int mx,int a[],int m,int n)
+    bool check(int mid,int arr[],int n,int m)
     {
-        int cs=0;
-        int ct=1;
+        int ct=1,cs=0;
+        
         for(int i=0;i<n;i++)
         {
-            if(cs+a[i]<=mx)
-              cs+=a[i];
+            if(cs+arr[i]<=mid)
+              cs+=arr[i];
+            
             else
             {
                 ct++;
-                cs=a[i];
+                cs=arr[i];
             }
         }
+        if(cs>mid)
+          return false;
         return ct<=m;
     }
     
     int findPages(int a[], int n, int m) 
     {
-        //code here
-        int st=INT_MIN,en=0;
+        int st=INT_MAX,en=0,ans=-1;
+        
+        if(m>n)
+          return -1;
         
         for(int i=0;i<n;i++)
         {
-            st=max(st,a[i]);
+            st=min(st,a[i]);
             en+=a[i];
         }
-        int ans=-1;
-        if(n<m)
-          return ans;
-        if(m==1)
-          return en;
         
         while(st<=en)
         {
             int mid=st+(en-st)/2;
-            if(check(mid,a,m,n))
+            
+            if(check(mid,a,n,m))
             {
                 ans=mid;
                 en=mid-1;
