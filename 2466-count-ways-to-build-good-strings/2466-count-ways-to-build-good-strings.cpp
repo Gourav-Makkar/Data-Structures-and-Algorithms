@@ -1,27 +1,23 @@
 class Solution {
 public:
-    int mod=1e9+7;
-    int helper(int low,int high,int z,int o,int curr,vector<int>&dp)
+    int mod=1000000007;
+    
+    int helper(int len,int &low,int &high,int &zero,int &one,vector<int>&dp)
     {
-        if(curr>high)
+        if(len>high)
             return 0;
-        int ans=0;
         
-        if(dp[curr]!=-1)
-            return dp[curr];
-        if(curr>=low && curr<=high)
-        {
-            ans=(1 + helper(low,high,z,o,curr+z,dp) + helper(low,high,z,o,curr+o,dp))%mod;
-        }
-        else
-            ans=(0+helper(low,high,z,o,curr+z,dp) + helper(low,high,z,o,curr+o,dp))%mod;
+        if(dp[len]!=-1)
+            return dp[len];
         
-        return dp[curr]=ans;
+        if(len>=low && len<=high)
+            return dp[len]=(1+helper(len+zero,low,high,zero,one,dp)+helper(len+one,low,high,zero,one,dp))%mod;
+        
+        return dp[len]=(helper(len+zero,low,high,zero,one,dp)+helper(len+one,low,high,zero,one,dp))%mod;
     }
     
     int countGoodStrings(int low, int high, int zero, int one) {
-    
         vector<int>dp(high+1,-1);
-        return helper(low,high,zero,one,0,dp);
+        return helper(0,low,high,zero,one,dp);
     }
 };
