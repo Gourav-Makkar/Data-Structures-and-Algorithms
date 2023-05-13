@@ -36,10 +36,8 @@ class Solution {
         while(i<j)
         {
             if(arr[i]!=arr[j])
-            {
-                // cout<<i<<" "<<j<<endl;
-                ans++;
-            }
+              ans++;
+              
             i++;
             j--;
         }
