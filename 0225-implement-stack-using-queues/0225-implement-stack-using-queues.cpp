@@ -1,7 +1,6 @@
 class MyStack {
 public:
     queue<int>q1,q2;
-    
     MyStack() {
         
     }
@@ -20,7 +19,6 @@ public:
         q1.pop();
         
         swap(q1,q2);
-        
         return val;
     }
     
