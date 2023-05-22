@@ -1,27 +1,21 @@
 class Solution {
 public:
-    
-    static bool cmp(pair<int,int>&a,pair<int,int>&b)
-    {
-        return a.second>b.second;
-    }
-    
     vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int,int>m;
         vector<int>ans;
-        map<int,int>m;
-        for(int i=0;i<nums.size();i++)
-        {
-            m[nums[i]]++;
-        }
-        vector<pair<int,int>>v;
-        for(auto &it:m)
-            v.push_back(it);
-        sort(v.begin(),v.end(),cmp);
+        
+        for(auto it:nums)
+            m[it]++;
+        
+        vector<pair<int,int>>temp;
+        
+        for(auto it:m)
+            temp.push_back({it.second,it.first});
+        
+        sort(temp.begin(),temp.end(),greater<pair<int,int>>());
         
         for(int i=0;i<k;i++)
-        {
-            ans.push_back(v[i].first);
-        }
+            ans.push_back(temp[i].second);
         return ans;
     }
 };
