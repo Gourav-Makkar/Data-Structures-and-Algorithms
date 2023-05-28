@@ -9,7 +9,7 @@ public:
         for(int i=1;i<intervals.size();i++)
         {
             int ns=intervals[i][0],ne=intervals[i][1];
-            if(cs<ns && ce<ns)
+            if(ce<ns)
             {
                 ans.push_back({cs,ce});
                 cs=ns;
