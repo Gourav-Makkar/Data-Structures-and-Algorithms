@@ -14,21 +14,18 @@ public:
     
     TreeNode* helper(TreeNode* root)
     {
-        if(root==NULL)
-            return NULL;
-        
+       if(root==NULL)
+           return NULL;
+       
         TreeNode* temp=root->right;
-        
         root->right=helper(root->left);
-        
         root->left=NULL;
-        TreeNode* node=root;
         
-        while(node->right!=NULL)
-            node=node->right;
+        TreeNode* curr=root;
+        while(curr->right!=NULL)
+            curr=curr->right;
         
-        node->right=helper(temp);
-        
+        curr->right=helper(temp);
         return root;
     }
     
