@@ -112,6 +112,11 @@ struct Node{
 
 Node* merge(Node* h1,Node* h2)
 {
+    if(!h1)
+      return h2;
+    if(!h2)
+      return h1;
+      
     Node* head=NULL,*tail=NULL;
     while(h1!=NULL && h2!=NULL)
     {
@@ -159,7 +164,7 @@ Node* merge(Node* h1,Node* h2)
 Node *flatten(Node *root)
 {
    // Your code here
-   if(root==NULL || root->next==NULL)
+   if(root==NULL)
      return root;
    Node* temp=flatten(root->next);
    root=merge(root,temp);
