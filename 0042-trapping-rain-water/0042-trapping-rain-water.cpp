@@ -14,12 +14,12 @@ public:
             
             if(height[l]<=height[r])
             {   
-                ans+=min(lmax,rmax)-height[l];
+                ans+=lmax-height[l];
                 l++;
             }
             else
             {
-                ans+=min(lmax,rmax)-height[r];
+                ans+=rmax-height[r];
                 r--;
             }
         }
