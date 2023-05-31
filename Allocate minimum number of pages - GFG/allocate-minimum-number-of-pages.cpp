@@ -18,38 +18,37 @@ class Solution
         
         for(int i=0;i<n;i++)
         {
-            if(cs+arr[i]<=mid)
-              cs+=arr[i];
-            
-            else
+            if(cs+arr[i]>mid)
             {
-                ct++;
                 cs=arr[i];
+                ct++;
             }
+            else
+              cs+=arr[i];
         }
-        if(cs>mid)
-          return false;
         return ct<=m;
     }
     
-    int findPages(int a[], int n, int m) 
+    //Function to find minimum number of pages.
+    int findPages(int arr[], int n, int m) 
     {
-        int st=INT_MAX,en=0,ans=-1;
-        
         if(m>n)
           return -1;
+          
+        int st=INT_MIN,en=0;
         
         for(int i=0;i<n;i++)
         {
-            st=min(st,a[i]);
-            en+=a[i];
+            st=max(st,arr[i]);
+            en+=arr[i];
         }
         
+        int ans;
         while(st<=en)
         {
             int mid=st+(en-st)/2;
             
-            if(check(mid,a,n,m))
+            if(check(mid,arr,n,m))
             {
                 ans=mid;
                 en=mid-1;
