@@ -1,43 +1,53 @@
 class Solution {
 public:
     
-    
-    void dfs(int curr,vector<int>adj[],vector<int>&vis)
+    int findPar(int curr,vector<int>par)
     {
-        vis[curr]=1;
+        if(par[curr]==curr)
+            return curr;
         
-        for(auto it:adj[curr])
-        {
-            if(!vis[it])
-                dfs(it,adj,vis);
-        }
+        return par[curr]=findPar(par[curr],par);
     }
     
-    int findCircleNum(vector<vector<int>>& isConnected) {
-        int n=isConnected.size();
+    int findCircleNum(vector<vector<int>>& mat) {
+        int n=mat.size();
         
-        vector<int>adj[n];
+        vector<int>par(n),size(n,1);
+        
+        for(int i=0;i<n;i++)
+            par[i]=i;
+        
         for(int i=0;i<n;i++)
         {
             for(int j=0;j<n;j++)
             {
-                if(i!=j && isConnected[i][j]==1)
+                if(mat[i][j])
                 {
-                    adj[i].push_back(j);
-                    adj[j].push_back(i);
+                    int pi=findPar(i,par);
+                    int pj=findPar(j,par);
+                    
+                    if(pi==pj)
+                        continue;
+                    
+                    if(size[pi]<size[pj])
+                    {
+                        size[pj]+=size[pi];
+                        par[pi]=pj;
+                    }
+                    
+                    else
+                    {
+                        size[pi]+=size[pj];
+                        par[pj]=pi;
+                    }
                 }
             }
         }
-        vector<int>vis(n,0);
         int ans=0;
-        
         for(int i=0;i<n;i++)
         {
-            if(!vis[i])
-            {
+            if(par[i]==i)
                 ans++;
-                dfs(i,adj,vis);
-            }
         }
         return ans;
     }
